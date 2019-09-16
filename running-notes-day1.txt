@@ -819,3 +819,225 @@ b484
 b484
 
 /home/docker>
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                  NAMES
+b4847bf1bda6        nginx                  "nginx -g 'daemon of…"   17 minutes ago      Up 16 minutes       0.0.0.0:9999->80/tcp   nifty_cohen
+
+/home/docker> docker container exec b4847bf1bda6 pwd
+/
+
+/home/docker> docker container exec b4847bf1bda6 ls
+bin
+boot
+dev
+etc
+home
+lib
+lib64
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usr
+var
+
+/home/docker> ls /
+bin  data  etc   init  lib64    media  opt   root  sbin  sys  usr
+c    dev   home  lib   linuxrc  mnt    proc  run   srv   tmp  var
+
+/home/docker>
+
+/home/docker> docker container exec b4847bf1bda6 cat /etc/os-release
+PRETTY_NAME="Debian GNU/Linux 10 (buster)"
+NAME="Debian GNU/Linux"
+VERSION_ID="10"
+VERSION="10 (buster)"
+VERSION_CODENAME=buster
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+
+/home/docker> cat /etc/os-release
+NAME=Buildroot
+VERSION=2018.05.3
+ID=buildroot
+VERSION_ID=2018.05.3
+PRETTY_NAME="Buildroot 2018.05.3"
+
+/home/docker> docker container exec b4847bf1bda6 touch /tmp/f1.txt
+
+/home/docker> ls -ltra /tmp/f1.txt
+ls: cannot access '/tmp/f1.txt': No such file or directory
+
+/home/docker> docker container exec b4847bf1bda6 ls -ltra  /tmp/f1.txt
+-rw-r--r-- 1 root root 0 Sep 16 09:08 /tmp/f1.txt
+
+/home/docker> sh
+
+/home/docker> exit
+exit
+
+/home/docker> docker container exec -it b4847bf1bda6 sh
+# cat /etc/os-release
+PRETTY_NAME="Debian GNU/Linux 10 (buster)"
+NAME="Debian GNU/Linux"
+VERSION_ID="10"
+VERSION="10 (buster)"
+VERSION_CODENAME=buster
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+# cat /tmp/f1.txt
+# ls -ltra /tmp/f1.txt
+-rw-r--r-- 1 root root 0 Sep 16 09:08 /tmp/f1.txt
+# cd /usr/share/nginx/html
+# pwd
+/usr/share/nginx/html
+# ls
+50x.html  index.html
+# cat index.htl
+cat: index.htl: No such file or directory
+# cat index.html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+# pwd
+/usr/share/nginx/html
+# vi mypage.html
+sh: 10: vi: not found
+# ps
+sh: 11: ps: not found
+# ping
+sh: 12: ping: not found
+# ls
+50x.html  index.html
+# cat > mypage.html
+<h1>My Product code</h1>
+^C
+# cat mypage.html
+<h1>My Product code</h1>
+# ls
+50x.html  index.html  mypage.html
+# cat /etc/os-release
+PRETTY_NAME="Debian GNU/Linux 10 (buster)"
+NAME="Debian GNU/Linux"
+VERSION_ID="10"
+VERSION="10 (buster)"
+VERSION_CODENAME=buster
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+# apt-get update
+Get:1 http://security-cdn.debian.org/debian-security buster/updates InRelease [39.1 kB]
+Get:2 http://cdn-fastly.deb.debian.org/debian buster InRelease [122 kB]
+Get:4 http://security-cdn.debian.org/debian-security buster/updates/main amd64 Packages [85.0 kB]
+Get:3 http://cdn-fastly.deb.debian.org/debian buster-updates InRelease [49.3 kB]
+Get:5 http://cdn-fastly.deb.debian.org/debian buster/main amd64 Packages [7899 kB]
+Get:6 http://cdn-fastly.deb.debian.org/debian buster-updates/main amd64 Packages [884 B]
+Fetched 8194 kB in 12s (707 kB/s)
+Reading package lists... Done
+# apt-get install iputuils-ping
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+E: Unable to locate package iputuils-ping
+# apt-get install iputils-ping
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  libcap2 libcap2-bin libpam-cap
+The following NEW packages will be installed:
+  iputils-ping libcap2 libcap2-bin libpam-cap
+0 upgraded, 4 newly installed, 0 to remove and 0 not upgraded.
+Need to get 104 kB of archives.
+After this operation, 315 kB of additional disk space will be used.
+Do you want to continue? [Y/n] Y
+Get:1 http://cdn-fastly.deb.debian.org/debian buster/main amd64 libcap2 amd64 1:2.25-2 [17.6 kB]
+Get:2 http://cdn-fastly.deb.debian.org/debian buster/main amd64 iputils-ping amd64 3:20180629-2 [43.0 kB]
+Get:3 http://cdn-fastly.deb.debian.org/debian buster/main amd64 libcap2-bin amd64 1:2.25-2 [28.8 kB]
+Get:4 http://cdn-fastly.deb.debian.org/debian buster/main amd64 libpam-cap amd64 1:2.25-2 [14.3 kB]
+Fetched 104 kB in 1s (70.5 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libcap2:amd64.
+(Reading database ... 7203 files and directories currently installed.)
+Preparing to unpack .../libcap2_1%3a2.25-2_amd64.deb ...
+Unpacking libcap2:amd64 (1:2.25-2) ...
+Selecting previously unselected package iputils-ping.
+Preparing to unpack .../iputils-ping_3%3a20180629-2_amd64.deb ...
+Unpacking iputils-ping (3:20180629-2) ...
+Selecting previously unselected package libcap2-bin.
+Preparing to unpack .../libcap2-bin_1%3a2.25-2_amd64.deb ...
+Unpacking libcap2-bin (1:2.25-2) ...
+Selecting previously unselected package libpam-cap:amd64.
+Preparing to unpack .../libpam-cap_1%3a2.25-2_amd64.deb ...
+Unpacking libpam-cap:amd64 (1:2.25-2) ...
+Setting up libcap2:amd64 (1:2.25-2) ...
+Setting up libcap2-bin (1:2.25-2) ...
+Setting up libpam-cap:amd64 (1:2.25-2) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.28.1 /usr/local/share/perl/5.28.1 /usr/lib/x86_64-linux-gnu/perl5/5.28 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl/5.28 /usr/share/perl/5.28 /usr/local/lib/site_perl /usr/lib/x86_64-linux-gnu/perl-base) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up iputils-ping (3:20180629-2) ...
+Processing triggers for libc-bin (2.28-10) ...
+# ping google.com
+PING google.com (172.217.163.174) 56(84) bytes of data.
+64 bytes from maa05s05-in-f14.1e100.net (172.217.163.174): icmp_seq=2 ttl=54 time=13.2 ms
+64 bytes from maa05s05-in-f14.1e100.net (172.217.163.174): icmp_seq=3 ttl=54 time=16.7 ms
+64 bytes from maa05s05-in-f14.1e100.net (172.217.163.174): icmp_seq=4 ttl=54 time=18.2 ms
+64 bytes from maa05s05-in-f14.1e100.net (172.217.163.174): icmp_seq=5 ttl=54 time=11.6 ms
+64 bytes from maa05s05-in-f14.1e100.net (172.217.163.174): icmp_seq=6 ttl=54 time=17.5 ms
+^C
+--- google.com ping statistics ---
+6 packets transmitted, 5 received, 16.6667% packet loss, time 592ms
+rtt min/avg/max/mdev = 11.591/15.437/18.200/2.597 ms
+# exit
+
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                  NAMES
+b4847bf1bda6        nginx                  "nginx -g 'daemon of…"   37 minutes ago      Up 35 minutes       0.0.0.0:9999->80/tcp   nifty_cohen
+
+/home/docker>
+
