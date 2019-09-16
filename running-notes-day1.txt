@@ -340,3 +340,262 @@ Total reclaimed space: 3.377MB
 CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
 
 /home/docker>
+
+
+
+--------------------------------------------------------------------------------
+
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+
+/home/docker> docker container run -d nginx
+d0b1f6c4e8a3cd1adb7425602a761562c60b6d7db6ec72d3d566de86f3f1593c
+
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+d0b1f6c4e8a3        nginx                  "nginx -g 'daemon of…"   2 seconds ago       Up 1 second         80/tcp              vigilant_cray
+
+/home/docker> curl localhost:80
+curl: (7) Failed to connect to localhost port 80: Connection refused
+
+/home/docker> docker container inspect d0b1f6c4e8a3
+[
+    {
+        "Id": "d0b1f6c4e8a3cd1adb7425602a761562c60b6d7db6ec72d3d566de86f3f1593c",
+        "Created": "2019-09-16T07:16:26.440766756Z",
+        "Path": "nginx",
+        "Args": [
+            "-g",
+            "daemon off;"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 7658,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2019-09-16T07:16:26.945358091Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:ab56bba91343aafcdd94b7a44b42e12f32719b9a2b8579e93017c1280f48e8f3",
+        "ResolvConfPath": "/var/lib/docker/containers/d0b1f6c4e8a3cd1adb7425602a761562c60b6d7db6ec72d3d566de86f3f1593c/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/d0b1f6c4e8a3cd1adb7425602a761562c60b6d7db6ec72d3d566de86f3f1593c/hostname",
+        "HostsPath": "/var/lib/docker/containers/d0b1f6c4e8a3cd1adb7425602a761562c60b6d7db6ec72d3d566de86f3f1593c/hosts",
+        "LogPath": "/var/lib/docker/containers/d0b1f6c4e8a3cd1adb7425602a761562c60b6d7db6ec72d3d566de86f3f1593c/d0b1f6c4e8a3cd1adb7425602a761562c60b6d7db6ec72d3d566de86f3f1593c-json.log",
+        "Name": "/vigilant_cray",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "shareable",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DiskQuota": 0,
+            "KernelMemory": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": 0,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/5f6d22868bc6d531c3fb2b9a8c23fc8a70c060aea50533d768007dcbc42130bf-init/diff:/var/lib/docker/overlay2/67fa83dc4c06d682bb83a72ab175d54fab3d0d1283455d48147d463ca9d1e635/diff:/var/lib/docker/overlay2/27933f830b141d7ee050f1e7c1fbcdd0dd00329cfbb16d28a123603a18d74db2/diff:/var/lib/docker/overlay2/2e64267b1be1585389f75af47ea748d45df9ebfb5d0af17cf3577feed2de6b31/diff",
+                "MergedDir": "/var/lib/docker/overlay2/5f6d22868bc6d531c3fb2b9a8c23fc8a70c060aea50533d768007dcbc42130bf/merged",
+                "UpperDir": "/var/lib/docker/overlay2/5f6d22868bc6d531c3fb2b9a8c23fc8a70c060aea50533d768007dcbc42130bf/diff",
+                "WorkDir": "/var/lib/docker/overlay2/5f6d22868bc6d531c3fb2b9a8c23fc8a70c060aea50533d768007dcbc42130bf/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "d0b1f6c4e8a3",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.17.3",
+                "NJS_VERSION=0.3.5",
+                "PKG_RELEASE=1~buster"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "ArgsEscaped": true,
+            "Image": "nginx",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "990a29e46ad1ea7ef6cad5bfda4b7e2d882359d5a64440db220741a54b4a1d58",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "80/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/990a29e46ad1",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "7d30b6d0520c74484a768c188020d2b1739558d235436317755fd25479fe26ae",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.4",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:04",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "88236f4e038858fdedd1265d3864a80ee83eef0229425225e0892f9f0a50e213",
+                    "EndpointID": "7d30b6d0520c74484a768c188020d2b1739558d235436317755fd25479fe26ae",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.4",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:04",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+
+/home/docker> curl 172.17.0.4:80
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+/home/docker>
