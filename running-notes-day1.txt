@@ -1041,3 +1041,189 @@ b4847bf1bda6        nginx                  "nginx -g 'daemon of…"   37 minutes
 
 /home/docker>
 
+
+
+
+
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                  NAMES
+b4847bf1bda6        nginx                  "nginx -g 'daemon of…"   2 hours ago         Up 2 hours          0.0.0.0:9999->80/tcp   nifty_cohen
+
+/home/docker> docker container commit b4847bf1bda6 nginx-code
+sha256:38e22b985a5fac6f1f526751cee948280efdac88ed461e59c79b5388c8e2ba8d
+
+/home/docker> docker container rm -rf b4847bf1bda6
+unknown shorthand flag: 'r' in -rf
+See 'docker container rm --help'.
+
+/home/docker> docker container rm -f b4847bf1bda6
+b4847bf1bda6
+
+/home/docker> docker container run -d -p 9595:80 nginx-code
+45cc8e10f56ef75eb49075fecbec783cbc7e7f2e9d9b2a42a97d64b3e96e2bb0
+
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                  NAMES
+45cc8e10f56e        nginx-code             "nginx -g 'daemon of…"   15 seconds ago      Up 14 seconds       0.0.0.0:9595->80/tcp   blissful_babbage
+
+/home/docker> docker container exec 45cc cat /usr/share/nginx/html
+cat: /usr/share/nginx/html: Is a directory
+
+/home/docker> docker container exec 45cc cat /usr/share/nginx/html/mypage.html
+<h1>My Product code</h1>
+
+/home/docker> docker container exec 45cc ping -c2 google.com
+PING google.com (172.217.163.174) 56(84) bytes of data.
+64 bytes from maa05s05-in-f14.1e100.net (172.217.163.174): icmp_seq=1 ttl=54 time=18.7 ms
+64 bytes from maa05s05-in-f14.1e100.net (172.217.163.174): icmp_seq=2 ttl=54 time=16.8 ms
+
+--- google.com ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 2ms
+rtt min/avg/max/mdev = 16.825/17.753/18.682/0.938 ms
+
+/home/docker> docker image ls nginx
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              ab56bba91343        3 days ago          126MB
+
+/home/docker> docker image ls nginx-code
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx-code          latest              38e22b985a5f        4 minutes ago       145MB
+
+/home/docker> docker image pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+Digest: sha256:9688d0dae8812dd2437947b756393eb0779487e361aa2ffbc3a529dca61f102c
+Status: Image is up to date for nginx:latest
+
+/home/docker> docker image push nginx
+The push refers to repository [docker.io/library/nginx]
+ce3539cc1849: Layer already exists
+16d1b1dd2a23: Layer already exists
+2db44bce66cd: Layer already exists
+^C
+
+/home/docker> docker image push nginx-code
+The push refers to repository [docker.io/library/nginx-code]
+08c086e7d9be: Preparing
+ce3539cc1849: Preparing
+16d1b1dd2a23: Preparing
+2db44bce66cd: Preparing
+denied: requested access to the resource is denied
+
+/home/docker>
+
+/home/docker>
+
+/home/docker>
+
+/home/docker> docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: adityaprabhakara
+Password:
+Error response from daemon: Get https://registry-1.docker.io/v2/: unauthorized: incorrect username or password
+
+/home/docker> docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: adityaprabhakara
+Password:
+WARNING! Your password will be stored unencrypted in /home/docker/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+
+/home/docker> docker image ls nginx-code
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx-code          latest              38e22b985a5f        13 minutes ago      145MB
+
+/home/docker> docker push adityaprabhakara/nginx-code
+The push refers to repository [docker.io/adityaprabhakara/nginx-code]
+An image does not exist locally with the tag: adityaprabhakara/nginx-code
+
+/home/docker> docker image tag nginx-code adityaprabhakara/nginx-code
+
+/home/docker> docker image ls nginx-code
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx-code          latest              38e22b985a5f        14 minutes ago      145MB
+
+/home/docker> docker image ls adityaprabhakara/nginx-code
+REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
+adityaprabhakara/nginx-code   latest              38e22b985a5f        14 minutes ago      145MB
+
+/home/docker> docker image push adityaprabhakara/nginx-code
+The push refers to repository [docker.io/adityaprabhakara/nginx-code]
+08c086e7d9be: Pushing [==================================================>]  19.44MB
+ce3539cc1849: Pushed
+16d1b1dd2a23: Pushing [==================================================>]  57.33MB
+2db44bce66cd: Mounted from library/nginx
+net/http: TLS handshake timeout
+
+/home/docker> docker image push adityaprabhakara/nginx-code
+The push refers to repository [docker.io/adityaprabhakara/nginx-code]
+08c086e7d9be: Retrying in 6 seconds
+ce3539cc1849: Layer already exists
+16d1b1dd2a23: Pushing [==================================================>]  57.33MB
+^C
+
+/home/docker> ping google.com
+PING google.com (172.217.163.174): 56 data bytes
+64 bytes from 172.217.163.174: seq=0 ttl=55 time=18.070 ms
+64 bytes from 172.217.163.174: seq=1 ttl=55 time=32.173 ms
+64 bytes from 172.217.163.174: seq=2 ttl=55 time=15.501 ms
+^C
+--- google.com ping statistics ---
+3 packets transmitted, 3 packets received, 0% packet loss
+round-trip min/avg/max = 15.501/21.914/32.173 ms
+
+/home/docker> docker image tag nginx-code adityaprabhakara/nginx-new
+
+/home/docker> docker image push adityaprabhakara/nginx-new
+The push refers to repository [docker.io/adityaprabhakara/nginx-new]
+08c086e7d9be: Pushing [==================================================>]  19.44MB
+ce3539cc1849: Mounted from library/nginx
+16d1b1dd2a23: Preparing
+2db44bce66cd: Mounted from library/nginx
+net/http: TLS handshake timeout
+
+/home/docker> docker imag epull shruthikeerthi/nginx-customized
+docker: 'imag' is not a docker command.
+See 'docker --help'
+
+/home/docker> docker image pull shruthikeerthi/nginx-customized
+Using default tag: latest
+latest: Pulling from shruthikeerthi/nginx-customized
+b8f262c62ec6: Already exists
+a6639d774c21: Already exists
+22a7aa8442bf: Already exists
+7c6571209852: Pulling fs layer
+error pulling image configuration: Get https://production.cloudflare.docker.com/registry-v2/docker/registry/v2/blobs/sha256/dc/dc2814cf38bc8c6c970dfcded87fbb67df0258a3f1be90df9db72a9bd94a12d3/data?verify=1568633727-YdG%2Bs%2FhLLHAOkCamitBBLnPi%2FPk%3D: net/http: TLS handshake timeout
+
+/home/docker> ping google.com
+PING google.com (172.217.163.174): 56 data bytes
+64 bytes from 172.217.163.174: seq=0 ttl=55 time=20.433 ms
+64 bytes from 172.217.163.174: seq=1 ttl=55 time=14.413 ms
+^C
+--- google.com ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 14.413/17.423/20.433 ms
+
+/home/docker> docker logout
+Removing login credentials for https://index.docker.io/v1/
+
+/home/docker> docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: adityaprabhakara
+Password:
+WARNING! Your password will be stored unencrypted in /home/docker/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+
+/home/docker> docker image push adityaprabhakara/nginx-new
+The push refers to repository [docker.io/adityaprabhakara/nginx-new]
+08c086e7d9be: Pushing [==================================================>]  19.44MB
+ce3539cc1849: Pushed
+16d1b1dd2a23: Preparing
+
+
