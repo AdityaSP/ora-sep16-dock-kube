@@ -1,0 +1,457 @@
+/home/docker> docker image push adityaprabhakara/nginx-new
+The push refers to repository [docker.io/adityaprabhakara/nginx-new]
+08c086e7d9be: Pushed
+ce3539cc1849: Layer already exists
+16d1b1dd2a23: Layer already exists
+2db44bce66cd: Layer already exists
+latest: digest: sha256:249d407d2831798e6f871810722c0a548ccf9ce8b3fb9a696dafc1433413de91 size: 1160
+
+/home/docker>
+
+/home/docker>
+
+/home/docker>
+
+/home/docker> docker image ls nginx
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              ab56bba91343        4 days ago          126MB
+
+/home/docker> docker image ls nginx-code
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx-code          latest              38e22b985a5f        18 hours ago        145MB
+
+/home/docker> docker image history nginx
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+ab56bba91343        4 days ago          /bin/sh -c #(nop)  CMD ["nginx" "-g" "daemon…   0B
+<missing>           4 days ago          /bin/sh -c #(nop)  STOPSIGNAL SIGTERM           0B
+<missing>           4 days ago          /bin/sh -c #(nop)  EXPOSE 80                    0B
+<missing>           4 days ago          /bin/sh -c ln -sf /dev/stdout /var/log/nginx…   22B
+<missing>           4 days ago          /bin/sh -c set -x     && addgroup --system -…   56.8MB
+<missing>           4 days ago          /bin/sh -c #(nop)  ENV PKG_RELEASE=1~buster     0B
+<missing>           4 days ago          /bin/sh -c #(nop)  ENV NJS_VERSION=0.3.5        0B
+<missing>           4 days ago          /bin/sh -c #(nop)  ENV NGINX_VERSION=1.17.3     0B
+<missing>           4 days ago          /bin/sh -c #(nop)  LABEL maintainer=NGINX Do…   0B
+<missing>           5 days ago          /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>           5 days ago          /bin/sh -c #(nop) ADD file:1901172d265456090…   69.2MB
+
+/home/docker> docker image history nginx-code
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+38e22b985a5f        18 hours ago        nginx -g daemon off;                            19.4MB
+ab56bba91343        4 days ago          /bin/sh -c #(nop)  CMD ["nginx" "-g" "daemon…   0B
+<missing>           4 days ago          /bin/sh -c #(nop)  STOPSIGNAL SIGTERM           0B
+<missing>           4 days ago          /bin/sh -c #(nop)  EXPOSE 80                    0B
+<missing>           4 days ago          /bin/sh -c ln -sf /dev/stdout /var/log/nginx…   22B
+<missing>           4 days ago          /bin/sh -c set -x     && addgroup --system -…   56.8MB
+<missing>           4 days ago          /bin/sh -c #(nop)  ENV PKG_RELEASE=1~buster     0B
+<missing>           4 days ago          /bin/sh -c #(nop)  ENV NJS_VERSION=0.3.5        0B
+<missing>           4 days ago          /bin/sh -c #(nop)  ENV NGINX_VERSION=1.17.3     0B
+<missing>           4 days ago          /bin/sh -c #(nop)  LABEL maintainer=NGINX Do…   0B
+<missing>           5 days ago          /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>           5 days ago          /bin/sh -c #(nop) ADD file:1901172d265456090…   69.2MB
+
+/home/docker>
+
+/home/docker> docker image ls | head
+REPOSITORY                                TAG                 IMAGE ID            CREATED             SIZE
+adityaprabhakara/nginx-new                latest              38e22b985a5f        18 hours ago        145MB
+nginx-code                                latest              38e22b985a5f        18 hours ago        145MB
+adityaprabhakara/nginx-code               latest              38e22b985a5f        18 hours ago        145MB
+nginx                                     latest              ab56bba91343        4 days ago          126MB
+build-machine-k8s                         latest              9127446b2c08        3 weeks ago         1.15GB
+build-machine                             latest              44101d018280        5 weeks ago         1.1GB
+adityaprabhakara/app                      <none>              8451096077fd        7 weeks ago         10.6MB
+mysql                                     5.7                 f6509bac4980        8 weeks ago         373MB
+jenkins/jenkins                           lts                 b137a5753eb1        2 months ago        567MB
+
+/home/docker> docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                  NAMES
+45cc8e10f56e        nginx-code             "nginx -g 'daemon of…"   18 hours ago        Up 18 hours         0.0.0.0:9595->80/tcp   blissful_babbage
+
+/home/docker> docker container rm -f 45cc
+45cc
+
+/home/docker> docker container prune
+WARNING! This will remove all stopped containers.
+Are you sure you want to continue? [y/N] y
+Deleted Containers:
+422f894ea025a97564a8777737f1e2a7e715cbf90e17d80c7d0869cf6dfcbe2d
+
+Total reclaimed space: 0B
+
+/home/docker>
+
+/home/docker> docker image ls | head
+REPOSITORY                                TAG                 IMAGE ID            CREATED             SIZE
+nginx-code                                latest              38e22b985a5f        18 hours ago        145MB
+adityaprabhakara/nginx-code               latest              38e22b985a5f        18 hours ago        145MB
+adityaprabhakara/nginx-new                latest              38e22b985a5f        18 hours ago        145MB
+nginx                                     latest              ab56bba91343        4 days ago          126MB
+build-machine-k8s                         latest              9127446b2c08        3 weeks ago         1.15GB
+build-machine                             latest              44101d018280        5 weeks ago         1.1GB
+adityaprabhakara/app                      <none>              8451096077fd        7 weeks ago         10.6MB
+mysql                                     5.7                 f6509bac4980        8 weeks ago         373MB
+jenkins/jenkins                           lts                 b137a5753eb1        2 months ago        567MB
+
+/home/docker> docker image rm -f nginx
+Untagged: nginx:latest
+Untagged: nginx@sha256:9688d0dae8812dd2437947b756393eb0779487e361aa2ffbc3a529dca61f102c
+
+/home/docker> docker image rm -f adityaprabhakara/nginx-new
+Untagged: adityaprabhakara/nginx-new:latest
+Untagged: adityaprabhakara/nginx-new@sha256:249d407d2831798e6f871810722c0a548ccf9ce8b3fb9a696dafc1433413de91
+
+/home/docker> docker image rm -f adityaprabhakara/nginx-code
+Untagged: adityaprabhakara/nginx-code:latest
+
+/home/docker> docker image ls | head
+REPOSITORY                                TAG                 IMAGE ID            CREATED             SIZE
+nginx-code                                latest              38e22b985a5f        18 hours ago        145MB
+build-machine-k8s                         latest              9127446b2c08        3 weeks ago         1.15GB
+build-machine                             latest              44101d018280        5 weeks ago         1.1GB
+adityaprabhakara/app                      <none>              8451096077fd        7 weeks ago         10.6MB
+mysql                                     5.7                 f6509bac4980        8 weeks ago         373MB
+jenkins/jenkins                           lts                 b137a5753eb1        2 months ago        567MB
+ghost                                     1-alpine            0a776b9b8e0c        2 months ago        213MB
+k8s.gcr.io/kube-proxy                     v1.15.0             d235b23c3570        2 months ago        82.4MB
+k8s.gcr.io/kube-apiserver                 v1.15.0             201c7a840312        2 months ago        207MB
+
+/home/docker> docker image rm -f nginx-code
+Untagged: nginx-code:latest
+Deleted: sha256:38e22b985a5fac6f1f526751cee948280efdac88ed461e59c79b5388c8e2ba8d
+Deleted: sha256:6360eccdcd875ccaf138ebdb28672dff313decb2058df3edeac777cf38ecb468
+Deleted: sha256:ab56bba91343aafcdd94b7a44b42e12f32719b9a2b8579e93017c1280f48e8f3
+Deleted: sha256:57d7b96ffad6ea05fe17c800b518a2a04ff9cca78ba2ccd7b935f67a8106530f
+Deleted: sha256:9d8204abdaaec18fe2d87a461ca9e67c31466b33c7b48c13c79b8286bde5739d
+Deleted: sha256:2db44bce66cde56fca25aeeb7d09dc924b748e3adfe58c9cc3eb2bd2f68a1b68
+
+/home/docker>
+
+/home/docker> docker image pull adityaprabhakara/nginx-code
+Using default tag: latest
+latest: Pulling from adityaprabhakara/nginx-code
+1ab2bdfe9778: Pull complete
+a17e64cfe253: Pull complete
+e1288088c7a8: Pull complete
+3ab4c4f0690d: Pull complete
+Digest: sha256:323d24c3f1e72b21c749d4b3e36b4ecf6795632235a144c7c8329444534bd0e9
+Status: Downloaded newer image for adityaprabhakara/nginx-code:latest
+
+/home/docker> docker image pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+b8f262c62ec6: Pull complete
+a6639d774c21: Pull complete
+22a7aa8442bf: Pull complete
+Digest: sha256:9688d0dae8812dd2437947b756393eb0779487e361aa2ffbc3a529dca61f102c
+Status: Downloaded newer image for nginx:latest
+
+/home/docker> docker image ls nginx
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              ab56bba91343        4 days ago          126MB
+
+/home/docker> docker image ls nginx-code
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+
+/home/docker> docker image ls adityaprabhakara/nginx-code
+REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
+adityaprabhakara/nginx-code   latest              b50fcd9fb55f        13 days ago         145MB
+
+/home/docker>
+
+/home/docker> docker image rm adityaprabhakara/nginx-code
+Untagged: adityaprabhakara/nginx-code:latest
+Untagged: adityaprabhakara/nginx-code@sha256:323d24c3f1e72b21c749d4b3e36b4ecf6795632235a144c7c8329444534bd0e9
+Deleted: sha256:b50fcd9fb55f0b574eebd38e45e2d51d16f005e3197857e5657e8eebe2b5357e
+Deleted: sha256:6fb62e403e7390cee48d52389a9a874f999cf783d34ca5da31b8a65d6932b54c
+Deleted: sha256:9517458cc6efeca05fee894eb0dda7cda7a704a6469e4624792289c9ff4350c0
+Deleted: sha256:963e4580fca3bf364728a7df40a2348939c25213d32508c53849108d05764093
+Deleted: sha256:1c95c77433e8d7bf0f519c9d8c9ca967e2603f0defbf379130d9a841cca2e28e
+
+/home/docker> docker image rm nginx
+Untagged: nginx:latest
+Untagged: nginx@sha256:9688d0dae8812dd2437947b756393eb0779487e361aa2ffbc3a529dca61f102c
+Deleted: sha256:ab56bba91343aafcdd94b7a44b42e12f32719b9a2b8579e93017c1280f48e8f3
+Deleted: sha256:57d7b96ffad6ea05fe17c800b518a2a04ff9cca78ba2ccd7b935f67a8106530f
+Deleted: sha256:9d8204abdaaec18fe2d87a461ca9e67c31466b33c7b48c13c79b8286bde5739d
+Deleted: sha256:2db44bce66cde56fca25aeeb7d09dc924b748e3adfe58c9cc3eb2bd2f68a1b68
+
+/home/docker>
+
+/home/docker> docker image pull adityaprabhakara/nginx-new
+Using default tag: latest
+latest: Pulling from adityaprabhakara/nginx-new
+b8f262c62ec6: Pull complete
+a6639d774c21: Pull complete
+22a7aa8442bf: Pull complete
+13fa31a28a63: Pull complete
+Digest: sha256:249d407d2831798e6f871810722c0a548ccf9ce8b3fb9a696dafc1433413de91
+Status: Downloaded newer image for adityaprabhakara/nginx-new:latest
+
+/home/docker> docker image pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+b8f262c62ec6: Already exists
+a6639d774c21: Already exists
+22a7aa8442bf: Already exists
+Digest: sha256:9688d0dae8812dd2437947b756393eb0779487e361aa2ffbc3a529dca61f102c
+Status: Downloaded newer image for nginx:latest
+
+/home/docker> docker image ls adityaprabhakara/nginx-new
+REPOSITORY                   TAG                 IMAGE ID            CREATED             SIZE
+adityaprabhakara/nginx-new   latest              38e22b985a5f        19 hours ago        145MB
+
+/home/docker> docker image ls nginx
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              ab56bba91343        4 days ago          126MB
+
+/home/docker> docker image ls
+REPOSITORY                                TAG                 IMAGE ID            CREATED             SIZE
+adityaprabhakara/nginx-new                latest              38e22b985a5f        19 hours ago        145MB
+nginx                                     latest              ab56bba91343        4 days ago          126MB
+build-machine-k8s                         latest              9127446b2c08        3 weeks ago         1.15GB
+build-machine                             latest              44101d018280        5 weeks ago         1.1GB
+adityaprabhakara/app                      <none>              8451096077fd        7 weeks ago         10.6MB
+mysql                                     5.7                 f6509bac4980        8 weeks ago         373MB
+jenkins/jenkins                           lts                 b137a5753eb1        2 months ago        567MB
+ghost                                     1-alpine            0a776b9b8e0c        2 months ago        213MB
+k8s.gcr.io/kube-proxy                     v1.15.0             d235b23c3570        2 months ago        82.4MB
+k8s.gcr.io/kube-apiserver                 v1.15.0             201c7a840312        2 months ago        207MB
+k8s.gcr.io/kube-scheduler                 v1.15.0             2d3813851e87        2 months ago        81.1MB
+k8s.gcr.io/kube-controller-manager        v1.15.0             8328bb49b652        2 months ago        159MB
+k8s.gcr.io/kube-addon-manager             v9.0                119701e77cbc        8 months ago        83.1MB
+k8s.gcr.io/coredns                        1.3.1               eb516548c180        8 months ago        40.3MB
+k8s.gcr.io/kubernetes-dashboard-amd64     v1.10.1             f9aed6605b81        9 months ago        122MB
+k8s.gcr.io/etcd                           3.3.10              2c4adeb21b4f        9 months ago        258MB
+k8s.gcr.io/k8s-dns-sidecar-amd64          1.14.13             4b2e93f0133d        12 months ago       42.9MB
+k8s.gcr.io/k8s-dns-kube-dns-amd64         1.14.13             55a3c5209c5e        12 months ago       51.2MB
+k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64    1.14.13             6dc8ef8287d3        12 months ago       41.4MB
+k8s.gcr.io/pause                          3.1                 da86e6ba6ca1        21 months ago       742kB
+gcr.io/k8s-minikube/storage-provisioner   v1.8.1              4689081edb10        22 months ago       80.8MB
+
+/home/docker> docker image rm -f shruthikeerthi/nginx-customized
+Error: No such image: shruthikeerthi/nginx-customized
+
+/home/docker> #docker image rm -f shruthikeerthi/nginx-customized
+
+/home/docker> docker image ls
+REPOSITORY                                TAG                 IMAGE ID            CREATED             SIZE
+adityaprabhakara/nginx-new                latest              38e22b985a5f        19 hours ago        145MB
+nginx                                     latest              ab56bba91343        4 days ago          126MB
+build-machine-k8s                         latest              9127446b2c08        3 weeks ago         1.15GB
+build-machine                             latest              44101d018280        5 weeks ago         1.1GB
+adityaprabhakara/app                      <none>              8451096077fd        7 weeks ago         10.6MB
+mysql                                     5.7                 f6509bac4980        8 weeks ago         373MB
+jenkins/jenkins                           lts                 b137a5753eb1        2 months ago        567MB
+ghost                                     1-alpine            0a776b9b8e0c        2 months ago        213MB
+k8s.gcr.io/kube-proxy                     v1.15.0             d235b23c3570        2 months ago        82.4MB
+k8s.gcr.io/kube-apiserver                 v1.15.0             201c7a840312        2 months ago        207MB
+k8s.gcr.io/kube-controller-manager        v1.15.0             8328bb49b652        2 months ago        159MB
+k8s.gcr.io/kube-scheduler                 v1.15.0             2d3813851e87        2 months ago        81.1MB
+k8s.gcr.io/kube-addon-manager             v9.0                119701e77cbc        8 months ago        83.1MB
+k8s.gcr.io/coredns                        1.3.1               eb516548c180        8 months ago        40.3MB
+k8s.gcr.io/kubernetes-dashboard-amd64     v1.10.1             f9aed6605b81        9 months ago        122MB
+k8s.gcr.io/etcd                           3.3.10              2c4adeb21b4f        9 months ago        258MB
+k8s.gcr.io/k8s-dns-sidecar-amd64          1.14.13             4b2e93f0133d        12 months ago       42.9MB
+k8s.gcr.io/k8s-dns-kube-dns-amd64         1.14.13             55a3c5209c5e        12 months ago       51.2MB
+k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64    1.14.13             6dc8ef8287d3        12 months ago       41.4MB
+k8s.gcr.io/pause                          3.1                 da86e6ba6ca1        21 months ago       742kB
+gcr.io/k8s-minikube/storage-provisioner   v1.8.1              4689081edb10        22 months ago       80.8MB
+
+/home/docker> docker image pull shruthikeerthi/nginx-customized
+Using default tag: latest
+latest: Pulling from shruthikeerthi/nginx-customized
+b8f262c62ec6: Already exists
+a6639d774c21: Already exists
+22a7aa8442bf: Already exists
+7c6571209852: Pull complete
+Digest: sha256:2627c25a2825e066bb58ada1b4fd167b704bf940d0018846c97a9407d70d098c
+Status: Downloaded newer image for shruthikeerthi/nginx-customized:latest
+
+/home/docker> docker image rm shruthikeerthi/nginx-customized
+Untagged: shruthikeerthi/nginx-customized:latest
+Untagged: shruthikeerthi/nginx-customized@sha256:2627c25a2825e066bb58ada1b4fd167b704bf940d0018846c97a9407d70d098c
+Deleted: sha256:dc2814cf38bc8c6c970dfcded87fbb67df0258a3f1be90df9db72a9bd94a12d3
+Deleted: sha256:a3894fb7a1ef882cdc2e26e8fc4d52f91aa008b2e4421eeb973f4cd2a913d3b5
+
+/home/docker> docker image prune
+WARNING! This will remove all dangling images.
+Are you sure you want to continue? [y/N] y
+Deleted Images:
+untagged: adityaprabhakara/app@sha256:552bc313c1ef3c13110644b01d4cd6a9ceb0d7b2d6085eebc0154064cfaff1c1
+deleted: sha256:8451096077fdb266ea5f96439edfa3f5c2f4e6b21e04a01e9606e8678dce8458
+deleted: sha256:bed55106ce68d80f87068bd59ec1d2ab84303e8173cc07fd1590c60f03801a65
+deleted: sha256:76767d071b5b244509d5837b0b0dbc185aa3e397fe770b3339121dca622f884f
+deleted: sha256:b35f1bf2bc7e1237d32acdf80e3d79650c8d6209ef7370cba583a43924939c23
+deleted: sha256:1bfeebd65323b8ddf5bd6a51cc7097b72788bc982e9ab3280d53d3c613adffa7
+
+Total reclaimed space: 10.6MB
+
+/home/docker>
+
+/home/docker> pwd
+/home/docker
+
+/home/docker> ls
+
+/home/docker> ls -ltra
+total 4
+drwxr-xr-x 3 root   root     0 Jun 24 06:25 ..
+drwx------ 2 docker docker   0 Sep 16 04:45 .ssh
+-rw------- 1 docker docker 389 Sep 16 09:10 .bash_history
+drwx------ 2 docker docker   0 Sep 16 10:34 .docker
+drwxr-xr-x 4 docker docker   0 Sep 16 10:34 .
+
+/home/docker> cd /c/Users/
+
+/c/Users> ls
+ Aditya   Administrator  'All Users'   Default  'Default User'   Public   defaultuser0   desktop.ini
+
+/c/Users> cd Aditya/
+
+/c/Users/Aditya> ls
+'3D Objects'
+ AppData
+'Application Data'
+ Contacts
+ Cookies
+ Desktop
+ Documents
+ Downloads
+ Favorites
+ IntelGraphicsProfiles
+ Links
+'Local Settings'
+ MicrosoftEdgeBackups
+ Music
+'My Documents'
+ NTUSER.DAT
+ NTUSER.DAT{f516996d-79a2-11e9-8344-4889e7fb8136}.TxR.0.regtrans-ms
+ NTUSER.DAT{f516996d-79a2-11e9-8344-4889e7fb8136}.TxR.1.regtrans-ms
+ NTUSER.DAT{f516996d-79a2-11e9-8344-4889e7fb8136}.TxR.2.regtrans-ms
+ NTUSER.DAT{f516996d-79a2-11e9-8344-4889e7fb8136}.TxR.blf
+ NTUSER.DAT{f516996e-79a2-11e9-8344-4889e7fb8136}.TM.blf
+ NTUSER.DAT{f516996e-79a2-11e9-8344-4889e7fb8136}.TMContainer00000000000000000001.regtrans-ms
+ NTUSER.DAT{f516996e-79a2-11e9-8344-4889e7fb8136}.TMContainer00000000000000000002.regtrans-ms
+ NetHood
+'New folder'
+ OneDrive
+ Pictures
+ Postman
+ PrintHood
+ Recent
+ Roaming
+'Saved Games'
+ Searches
+ SendTo
+'Start Menu'
+ Templates
+ Videos
+ dnk
+ docker-workshop
+ ntuser.dat.LOG1
+ ntuser.dat.LOG2
+ ntuser.ini
+ playground
+ sshkeys
+
+/c/Users/Aditya> cd docker-workshop/
+
+/c/Users/Aditya/docker-workshop> cd sep
+sep3/   sept16/
+
+/c/Users/Aditya/docker-workshop> cd sept16/
+
+/c/Users/Aditya/docker-workshop/sept16>
+
+/c/Users/Aditya/docker-workshop/sept16> ls
+ora-sep16-dock-kube
+
+/c/Users/Aditya/docker-workshop/sept16> cd ora-sep16-dock-kube/
+
+/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube> mkdir app
+
+/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube> cd app
+
+/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app> ls
+
+/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app> ls
+
+/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app> export PS1='------------$PWD\n> '
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+> export PS1='\n------------$PWD\n$ '
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ ls
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ vi Dockerfile
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ cat Dockerfile
+FROM alpine
+RUN apk update
+RUN apk add apache2
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image build -f Dockerfile -t app:1 -t app:latest .
+Sending build context to Docker daemon  2.048kB
+Step 1/3 : FROM alpine
+latest: Pulling from library/alpine
+9d48c3bd43c5: Pull complete
+Digest: sha256:72c42ed48c3a2db31b7dafe17d275b634664a708d901ec9fd57b1529280f01fb
+Status: Downloaded newer image for alpine:latest
+ ---> 961769676411
+Step 2/3 : RUN apk update
+ ---> Running in be954518b885
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/community/x86_64/APKINDEX.tar.gz
+v3.10.2-51-g21ccaac25b [http://dl-cdn.alpinelinux.org/alpine/v3.10/main]
+v3.10.2-42-g95d37f7648 [http://dl-cdn.alpinelinux.org/alpine/v3.10/community]
+OK: 10336 distinct packages available
+Removing intermediate container be954518b885
+ ---> 73e6fa59f8ec
+Step 3/3 : RUN apk add apache2
+ ---> Running in 1049b487075d
+(1/6) Installing libuuid (2.33.2-r0)
+(2/6) Installing apr (1.6.5-r0)
+(3/6) Installing expat (2.2.7-r1)
+(4/6) Installing apr-util (1.6.1-r6)
+(5/6) Installing pcre (8.43-r0)
+(6/6) Installing apache2 (2.4.41-r0)
+Executing apache2-2.4.41-r0.pre-install
+Executing busybox-1.30.1-r2.trigger
+OK: 9 MiB in 20 packages
+Removing intermediate container 1049b487075d
+ ---> 2b5627a92f3f
+Successfully built 2b5627a92f3f
+Successfully tagged app:1
+Successfully tagged app:latest
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ #docker image build -f Dockerfile -t app:1 -t app:latest .
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ cat Dockerfile
+FROM alpine
+RUN apk update
+RUN apk add apache2
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image ls app
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+app                 1                   2b5627a92f3f        30 seconds ago      10.6MB
+app                 latest              2b5627a92f3f        30 seconds ago      10.6MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image ls alpine
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+alpine              latest              961769676411        3 weeks ago         5.58MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ cat Dockerfile
+FROM alpine
+RUN apk update
+RUN apk add apache2
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
