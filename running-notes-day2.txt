@@ -764,3 +764,57 @@ PID   USER     TIME  COMMAND
 
 ------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
 $
+
+
+
+-----------------------------------------------------------------------------------------------------
+
+$ ps -ef | grep httpd
+root      9904  9883  0 06:48 ?        00:00:00 httpd -D FOREGROUND
+100       9946  9904  0 06:48 ?        00:00:00 httpd -D FOREGROUND
+100       9947  9904  0 06:48 ?        00:00:00 httpd -D FOREGROUND
+100       9948  9904  0 06:48 ?        00:00:00 httpd -D FOREGROUND
+100       9949  9904  0 06:48 ?        00:00:00 httpd -D FOREGROUND
+100       9950  9904  0 06:48 ?        00:00:00 httpd -D FOREGROUND
+100      10587  9904  0 06:49 ?        00:00:00 httpd -D FOREGROUND
+root     17220 24956  0 07:04 pts/1    00:00:00 grep httpd
+$ ps -ef | grep 9883
+root      9883  2344  0 06:48 ?        00:00:00 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/54efc2135fe298c63213e9d9bb0f5aaa7dd9a3a8042bf264f305d3ecf91a2e14 -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      9904  9883  0 06:48 ?        00:00:00 httpd -D FOREGROUND
+root     15818  9883  0 07:01 pts/0    00:00:00 sh
+root     18226 24956  0 07:06 pts/1    00:00:00 grep 9883
+$ ps -ef | grep 2344
+root      2344  2337  0 Sep16 ?        00:01:35 containerd --config /var/run/docker/containerd/containerd.toml --log-level info
+root      3187  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/57a01eccfb0dd3ac577c689a6143f5ce89bb8be80d621284958cbdbc7b4313cc -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      3197  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/215cfec52c3782ea3c0198c066d210a214ae2710727d36015a5dedc13c21bfa3 -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      3198  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/1f366e7ad2df0ae5751c2a401fd1acbbf105853e5ee88f33cf7ec105b30ff4ba -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      3218  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/f1610b8cf0ed0947ad907820706472d1c30fbc69d0ec4d3b2d00c1b3d0b13387 -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      3223  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/d6a36e32e5ce80a6a300c6f474dd99e6db0eb0d037ff8f85f7a94152a313a4bf -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      3407  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/31e07617a3d0ef4b7459d46502d7dc8ed1be4cbf4983b2fea2ec3f8c79c01004 -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      3424  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/1de77fcbf5f28c1d61e33d2d1f2842f95996ef21debbc27844b635af32c2a0f9 -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      3432  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/a8eb4031bc09d4a780776947872eb2454b3aa001e67d03a6deef59bc8490537c -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      3449  2344  0 Sep16 ?        00:01:02 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/f2876e252ca156ed8834e408b0190913c4a2273e4ec3cc7f3ee3af72e0cf87d5 -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      3487  2344  0 Sep16 ?        00:00:02 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/1c1e31db114778e57349bbda7d476385d19081cd51bfb0c705d9e7a6fd5b8253 -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      3712  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/7df9da0cb341ee208b1d4ee893cfb014b367f58ea001fa4755dfdcc396fb9d6f -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      3834  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/72224a6fc02f7d0ac9911d30bd94e029ad41eab5d07b99177c68c373945c106c -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      3866  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/b7020681b0058ee2250d9316da3d8dfd9ce7e279e84e295d6b8c5aa8e2f25163 -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      3900  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/72b07210e775963bb3a2622b6edabe3494e7e83c4537c9365144920487c3d69d -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      4174  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/6dd1046c97a77d14bacccf99693f57fa01de79b196849da262ca2468c5d1d4ba -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      5219  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/a50bd8135b7c3aaf0a0e7832d1452628c468703cb2408ad8adfd1f1528ca30d4 -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      5380  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/f5e5de8531cce4ea00c137ee98d246bdc81dc22e24939c2ef4d65f4d683181d2 -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      5450  2344  0 Sep16 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/e864f3fc31d34b35009e568c61f3fa4b38ae3aaabc164088e2341504b4f11f5e -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      9883  2344  0 06:49 ?        00:00:00 containerd-shim -namespace moby -workdir /var/lib/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/54efc2135fe298c63213e9d9bb0f5aaa7dd9a3a8042bf264f305d3ecf91a2e14 -address /var/run/docker/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root     19425 24956  0 07:10 pts/1    00:00:00 grep 2344
+$ docker container ls | wc -l
+20
+$ ps -ef | grep 2344 | wc -l
+21
+$ ps -ef | grep 2337
+root      2337     1  0 Sep16 ?        00:13:49 /usr/bin/dockerd -H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock --tlsverify --tlscacert /etc/docker/ca.pem --tlscert /etc/docker/server.pem --tlskey /etc/docker/server-key.pem --label provider=virtualbox --insecure-registry 10.96.0.0/12
+root      2344  2337  0 Sep16 ?        00:01:35 containerd --config /var/run/docker/containerd/containerd.toml --log-level info
+root      9877  2337  0 06:49 ?        00:00:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 9090 -container-ip 172.17.0.4 -container-port 80
+root     20268 24956  0 07:12 pts/1    00:00:00 grep 2337
+$
+$
+$
+$ kill -9 9904
