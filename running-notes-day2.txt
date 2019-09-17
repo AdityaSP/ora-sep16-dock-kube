@@ -589,3 +589,178 @@ Successfully tagged app:latest
 
 ------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
 $
+
+
+-----------------------------------------------------------------------------------------------------------------
+$ docker container ls -a | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d app
+18a2fe1c03cdc0726e5a6ca55102615f9e6f937538cd87d23936ed8000022d0d
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls  | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                      PORTS               NAMES
+18a2fe1c03cd        app                    "/bin/sh"                18 seconds ago      Exited (0) 18 seconds ago                       blissful_sammet
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d nginx
+302d2106e0b6f5f2e7e7feb890663b7174efe47c76d470a6df2510d7984c1d7c
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                      PORTS               NAMES
+302d2106e0b6        nginx                  "nginx -g 'daemon of…"   2 seconds ago       Up 1 second                 80/tcp              festive_margulis
+18a2fe1c03cd        app                    "/bin/sh"                40 seconds ago      Exited (0) 40 seconds ago                       blissful_sammet
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d app ping google.com
+f8555b0606e7a20c264e1a066d06b572093dcac2b5279ede3d694732b509497f
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                     PORTS               NAMES
+f8555b0606e7        app                    "ping google.com"        6 seconds ago       Up 5 seconds                                   pensive_goldstine
+302d2106e0b6        nginx                  "nginx -g 'daemon of…"   3 minutes ago       Up 3 minutes               80/tcp              festive_margulis
+18a2fe1c03cd        app                    "/bin/sh"                4 minutes ago       Exited (0) 4 minutes ago                       blissful_sammet
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d app ping -c20 google.com
+2828c6c851b5d29cc116025424417343c51086229b9350d0a5cd3992f13fa9de
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                     PORTS               NAMES
+2828c6c851b5        app                    "ping -c20 google.com"   4 seconds ago       Up 3 seconds                                   vibrant_borg
+f8555b0606e7        app                    "ping google.com"        2 minutes ago       Up 2 minutes                                   pensive_goldstine
+302d2106e0b6        nginx                  "nginx -g 'daemon of…"   6 minutes ago       Up 6 minutes               80/tcp              festive_margulis
+18a2fe1c03cd        app                    "/bin/sh"                6 minutes ago       Exited (0) 6 minutes ago                       blissful_sammet
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED              STATUS                      PORTS               NAMES
+2828c6c851b5        app                    "ping -c20 google.com"   About a minute ago   Exited (0) 53 seconds ago                       vibrant_borg
+f8555b0606e7        app                    "ping google.com"        3 minutes ago        Up 3 minutes                                    pensive_goldstine
+302d2106e0b6        nginx                  "nginx -g 'daemon of…"   7 minutes ago        Up 7 minutes                80/tcp              festive_margulis
+18a2fe1c03cd        app                    "/bin/sh"                7 minutes ago        Exited (0) 7 minutes ago                        blissful_sammet
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run  app ping -c2 google.com
+PING google.com (172.217.163.174): 56 data bytes
+64 bytes from 172.217.163.174: seq=0 ttl=54 time=17.628 ms
+64 bytes from 172.217.163.174: seq=1 ttl=54 time=10.803 ms
+
+--- google.com ping statistics ---
+2 packets transmitted, 2 packets received, 0% packet loss
+round-trip min/avg/max = 10.803/14.215/17.628 ms
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container logs 2828c6c851b5
+PING google.com (172.217.163.174): 56 data bytes
+64 bytes from 172.217.163.174: seq=0 ttl=54 time=14.660 ms
+64 bytes from 172.217.163.174: seq=1 ttl=54 time=17.142 ms
+64 bytes from 172.217.163.174: seq=2 ttl=54 time=17.270 ms
+64 bytes from 172.217.163.174: seq=3 ttl=54 time=14.016 ms
+64 bytes from 172.217.163.174: seq=4 ttl=54 time=16.561 ms
+64 bytes from 172.217.163.174: seq=5 ttl=54 time=12.707 ms
+64 bytes from 172.217.163.174: seq=6 ttl=54 time=14.868 ms
+64 bytes from 172.217.163.174: seq=7 ttl=54 time=16.863 ms
+64 bytes from 172.217.163.174: seq=8 ttl=54 time=17.102 ms
+64 bytes from 172.217.163.174: seq=9 ttl=54 time=17.441 ms
+64 bytes from 172.217.163.174: seq=10 ttl=54 time=22.771 ms
+64 bytes from 172.217.163.174: seq=11 ttl=54 time=16.311 ms
+64 bytes from 172.217.163.174: seq=12 ttl=54 time=16.555 ms
+64 bytes from 172.217.163.174: seq=13 ttl=54 time=15.489 ms
+64 bytes from 172.217.163.174: seq=14 ttl=54 time=14.803 ms
+64 bytes from 172.217.163.174: seq=15 ttl=54 time=26.888 ms
+64 bytes from 172.217.163.174: seq=16 ttl=54 time=15.058 ms
+64 bytes from 172.217.163.174: seq=17 ttl=54 time=48.011 ms
+64 bytes from 172.217.163.174: seq=18 ttl=54 time=43.067 ms
+64 bytes from 172.217.163.174: seq=19 ttl=54 time=39.357 ms
+
+--- google.com ping statistics ---
+20 packets transmitted, 20 packets received, 0% packet loss
+round-trip min/avg/max = 12.707/20.847/48.011 ms
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                      PORTS               NAMES
+71f18f20328b        app                    "ping -c2 google.com"    2 minutes ago       Exited (0) 2 minutes ago                        quirky_bose
+2828c6c851b5        app                    "ping -c20 google.com"   4 minutes ago       Exited (0) 4 minutes ago                        vibrant_borg
+f8555b0606e7        app                    "ping google.com"        7 minutes ago       Up 7 minutes                                    pensive_goldstine
+302d2106e0b6        nginx                  "nginx -g 'daemon of…"   10 minutes ago      Up 10 minutes               80/tcp              festive_margulis
+18a2fe1c03cd        app                    "/bin/sh"                11 minutes ago      Exited (0) 11 minutes ago                       blissful_sammet
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container exec -it pensive_goldstine sh
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 ping google.com
+    6 root      0:00 sh
+   12 root      0:00 ps
+/ # httpd -D FOREGROUND
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.5. Set the 'ServerName' directive globally to suppress this message
+
+
+^C/ # exit
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container rm -f 71f18f20328b 2828c6c851b5 f8555b0606e7 302d2106e0b6 18a2fe1c03cd
+71f18f20328b
+2828c6c851b5
+f8555b0606e7
+302d2106e0b6
+18a2fe1c03cd
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d -p 9090:80 app httpd -D FOREGROUND
+54efc2135fe298c63213e9d9bb0f5aaa7dd9a3a8042bf264f305d3ecf91a2e14
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                  NAMES
+54efc2135fe2        app                    "httpd -D FOREGROUND"    3 seconds ago       Up 3 seconds        0.0.0.0:9090->80/tcp   wizardly_rubin
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container exec -it 54efc2135fe2
+"docker container exec" requires at least 2 arguments.
+See 'docker container exec --help'.
+
+Usage:  docker container exec [OPTIONS] CONTAINER COMMAND [ARG...]
+
+Run a command in a running container
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container exec -it 54efc2135fe2 sh
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 httpd -D FOREGROUND
+    6 apache    0:00 httpd -D FOREGROUND
+    7 apache    0:00 httpd -D FOREGROUND
+    8 apache    0:00 httpd -D FOREGROUND
+    9 apache    0:00 httpd -D FOREGROUND
+   10 apache    0:00 httpd -D FOREGROUND
+   11 root      0:00 sh
+   16 root      0:00 ps
+/ # exit
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
