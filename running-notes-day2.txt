@@ -818,3 +818,156 @@ $
 $
 $
 $ kill -9 9904
+
+
+
+----------------------------------------------------------------------------------------------------------------------------
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ vi Dockerfile
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ cat Dockerfile
+FROM alpine
+RUN apk update
+RUN apk add apache2
+COPY mypage.html /var/www/localhost/htdocs
+CMD ["httpd", "-D", "FOREGROUND"]
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image build -f Dockerfile -t app:3 -t app:latest .
+Sending build context to Docker daemon  3.072kB
+Step 1/5 : FROM alpine
+ ---> 961769676411
+Step 2/5 : RUN apk update
+ ---> Using cache
+ ---> 73e6fa59f8ec
+Step 3/5 : RUN apk add apache2
+ ---> Using cache
+ ---> 2b5627a92f3f
+Step 4/5 : COPY mypage.html /var/www/localhost/htdocs
+ ---> Using cache
+ ---> d816d744292c
+Step 5/5 : CMD ["httpd", "-D", "FOREGROUND"]
+ ---> Running in ec30e5946d98
+Removing intermediate container ec30e5946d98
+ ---> 47af00f0dfcc
+Successfully built 47af00f0dfcc
+Successfully tagged app:3
+Successfully tagged app:latest
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image ls app
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+app                 3                   47af00f0dfcc        8 seconds ago       10.6MB
+app                 latest              47af00f0dfcc        8 seconds ago       10.6MB
+app                 2                   d816d744292c        2 hours ago         10.6MB
+app                 1                   2b5627a92f3f        3 hours ago         10.6MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                           PORTS               NAMES
+54efc2135fe2        d816d744292c           "httpd -D FOREGROUND"    2 hours ago         Exited (137) About an hour ago                       wizardly_rubin
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d -p 9595:80 app
+09a4ffcfb6df6600dcb10448d011bf4188605c20c0c4651e186e7c661140fcbd
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS                           PORTS                  NAMES
+09a4ffcfb6df        app                    "httpd -D FOREGROUND"    3 seconds ago       Up 2 seconds                     0.0.0.0:9595->80/tcp   stoic_hodgkin
+54efc2135fe2        d816d744292c           "httpd -D FOREGROUND"    2 hours ago         Exited (137) About an hour ago                          wizardly_rubin
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image history nginx
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+ab56bba91343        4 days ago          /bin/sh -c #(nop)  CMD ["nginx" "-g" "daemon…   0B
+<missing>           4 days ago          /bin/sh -c #(nop)  STOPSIGNAL SIGTERM           0B
+<missing>           4 days ago          /bin/sh -c #(nop)  EXPOSE 80                    0B
+<missing>           4 days ago          /bin/sh -c ln -sf /dev/stdout /var/log/nginx…   22B
+<missing>           4 days ago          /bin/sh -c set -x     && addgroup --system -…   56.8MB
+<missing>           4 days ago          /bin/sh -c #(nop)  ENV PKG_RELEASE=1~buster     0B
+<missing>           4 days ago          /bin/sh -c #(nop)  ENV NJS_VERSION=0.3.5        0B
+<missing>           4 days ago          /bin/sh -c #(nop)  ENV NGINX_VERSION=1.17.3     0B
+<missing>           4 days ago          /bin/sh -c #(nop)  LABEL maintainer=NGINX Do…   0B
+<missing>           5 days ago          /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>           5 days ago          /bin/sh -c #(nop) ADD file:1901172d265456090…   69.2MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image history alpine
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+961769676411        3 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>           3 weeks ago         /bin/sh -c #(nop) ADD file:fe64057fbb83dccb9…   5.58MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image history app
+IMAGE               CREATED              CREATED BY                                      SIZE                COMMENT
+47af00f0dfcc        About a minute ago   /bin/sh -c #(nop)  CMD ["httpd" "-D" "FOREGR…   0B
+d816d744292c        2 hours ago          /bin/sh -c #(nop) COPY file:fc02d42913b4ec89…   19B
+2b5627a92f3f        3 hours ago          /bin/sh -c apk add apache2                      3.6MB
+73e6fa59f8ec        3 hours ago          /bin/sh -c apk update                           1.42MB
+961769676411        3 weeks ago          /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>           3 weeks ago          /bin/sh -c #(nop) ADD file:fe64057fbb83dccb9…   5.58MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED              STATUS                           PORTS                  NAMES
+09a4ffcfb6df        app                    "httpd -D FOREGROUND"    About a minute ago   Up About a minute                0.0.0.0:9595->80/tcp   stoic_hodgkin
+54efc2135fe2        d816d744292c           "httpd -D FOREGROUND"    2 hours ago          Exited (137) About an hour ago                          wizardly_rubin
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ vi Dockerfile
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image ls alpine
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+alpine              latest              961769676411        3 weeks ago         5.58MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image pull alpine:3.10.2
+3.10.2: Pulling from library/alpine
+Digest: sha256:72c42ed48c3a2db31b7dafe17d275b634664a708d901ec9fd57b1529280f01fb
+Status: Downloaded newer image for alpine:3.10.2
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image ls alpine
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+alpine              3.10.2              961769676411        3 weeks ago         5.58MB
+alpine              latest              961769676411        3 weeks ago         5.58MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image pull alpine:3.9
+3.9: Pulling from library/alpine
+e7c96db7181b: Already exists
+Digest: sha256:7746df395af22f04212cd25a92c1d6dbc5a06a0ca9579a229ef43008d4d1302a
+Status: Downloaded newer image for alpine:3.9
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image ls alpine
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+alpine              3.10.2              961769676411        3 weeks ago         5.58MB
+alpine              latest              961769676411        3 weeks ago         5.58MB
+alpine              3.9                 055936d39205        4 months ago        5.53MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ vi Dockerfile
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ cat Dockerfile
+FROM alpine:3
+RUN apk update
+RUN apk add apache2
+COPY mypage.html /var/www/localhost/htdocs
+CMD ["httpd", "-D", "FOREGROUND"]
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
