@@ -2132,3 +2132,420 @@ $ docker container inspect 263ff46
 
 ------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
 $
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d --name w1  app
+eb51ecfc138aea836348efcf272e2b96962bfb06842accbdee1a30c336a89787
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d --name w2  app
+2b54552a21caca1024d5464afffb2c00331f7d806804ed6cf0336472625ce4d0
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d --name db  app
+5f9ad10c9920892dfb3950226c823082ef9f890512ffbf67b4c1aebe892b0992
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+5f9ad10c9920        app                    "httpd -D FOREGROUND"    19 seconds ago      Up 18 seconds                           db
+2b54552a21ca        app                    "httpd -D FOREGROUND"    22 seconds ago      Up 21 seconds                           w2
+eb51ecfc138a        app                    "httpd -D FOREGROUND"    30 seconds ago      Up 29 seconds                           w1
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container inspect w1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.4",
+                    "IPAddress": "172.17.0.4",
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container inspect w2 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.5",
+                    "IPAddress": "172.17.0.5",
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container inspect db | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.6",
+                    "IPAddress": "172.17.0.6",
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container exec w1 ping -c1 172.17.0.5
+PING 172.17.0.5 (172.17.0.5): 56 data bytes
+64 bytes from 172.17.0.5: seq=0 ttl=64 time=0.081 ms
+
+--- 172.17.0.5 ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 0.081/0.081/0.081 ms
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container exec w1 ping -c1 172.17.0.6
+PING 172.17.0.6 (172.17.0.6): 56 data bytes
+64 bytes from 172.17.0.6: seq=0 ttl=64 time=0.093 ms
+
+--- 172.17.0.6 ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 0.093/0.093/0.093 ms
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+88236f4e0388        bridge              bridge              local
+62e0554f0114        host                host                local
+d1ed7d99f26f        none                null                local
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network inspect bridge
+[
+    {
+        "Name": "bridge",
+        "Id": "88236f4e038858fdedd1265d3864a80ee83eef0229425225e0892f9f0a50e213",
+        "Created": "2019-09-16T04:45:30.453134251Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.17.0.0/16",
+                    "Gateway": "172.17.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "2b54552a21caca1024d5464afffb2c00331f7d806804ed6cf0336472625ce4d0": {
+                "Name": "w2",
+                "EndpointID": "79d77bc1d59cbd2df62377f7e7ec22fef28f868c4203e38fe4caaadab457ee6f",
+                "MacAddress": "02:42:ac:11:00:05",
+                "IPv4Address": "172.17.0.5/16",
+                "IPv6Address": ""
+            },
+            "5f9ad10c9920892dfb3950226c823082ef9f890512ffbf67b4c1aebe892b0992": {
+                "Name": "db",
+                "EndpointID": "714ef4b1a89205ecbda72f5876085866e29722e0ceeab929e2f79e6b0fc67f43",
+                "MacAddress": "02:42:ac:11:00:06",
+                "IPv4Address": "172.17.0.6/16",
+                "IPv6Address": ""
+            },
+            "72224a6fc02f7d0ac9911d30bd94e029ad41eab5d07b99177c68c373945c106c": {
+                "Name": "k8s_POD_coredns-5c98db65d4-z66tl_kube-system_63f25925-2b2a-40cc-bddf-e7628c325a0e_16",
+                "EndpointID": "5e5adf581b8f0820434708654ef652c975a0b71a6e8a55e8ce07cab49b1252eb",
+                "MacAddress": "02:42:ac:11:00:02",
+                "IPv4Address": "172.17.0.2/16",
+                "IPv6Address": ""
+            },
+            "b7020681b0058ee2250d9316da3d8dfd9ce7e279e84e295d6b8c5aa8e2f25163": {
+                "Name": "k8s_POD_coredns-5c98db65d4-trt27_kube-system_88bfc54f-d9a4-4670-ba4b-6ead6bb210a1_16",
+                "EndpointID": "93bb52239354bad6e0677a38352cf34894de326a878d0e1f4a61ab12e07aae09",
+                "MacAddress": "02:42:ac:11:00:03",
+                "IPv4Address": "172.17.0.3/16",
+                "IPv6Address": ""
+            },
+            "eb51ecfc138aea836348efcf272e2b96962bfb06842accbdee1a30c336a89787": {
+                "Name": "w1",
+                "EndpointID": "52e1c1a4eaac580004f9be9c682809820f05120d9c887bccade5c2a616ca5bcd",
+                "MacAddress": "02:42:ac:11:00:04",
+                "IPv4Address": "172.17.0.4/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {
+            "com.docker.network.bridge.default_bridge": "true",
+            "com.docker.network.bridge.enable_icc": "true",
+            "com.docker.network.bridge.enable_ip_masquerade": "true",
+            "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
+            "com.docker.network.bridge.name": "docker0",
+            "com.docker.network.driver.mtu": "1500"
+        },
+        "Labels": {}
+    }
+]
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network create w1-db-net
+5ea1523edb52a3d094f05e3d6e479a472a039960d0c58cfdbeeca1ac126c8ec3
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+88236f4e0388        bridge              bridge              local
+62e0554f0114        host                host                local
+d1ed7d99f26f        none                null                local
+5ea1523edb52        w1-db-net           bridge              local
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network inspect w1-db-net
+[
+    {
+        "Name": "w1-db-net",
+        "Id": "5ea1523edb52a3d094f05e3d6e479a472a039960d0c58cfdbeeca1ac126c8ec3",
+        "Created": "2019-09-17T10:38:32.507725633Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.18.0.0/16",
+                    "Gateway": "172.18.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network disconnect bridge w1
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network connect w1-db-net w1
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container inspect w1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.18.0.2",
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network disconnect bridge db
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network connect w1-db-net db
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container inspect db | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.18.0.3",
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network connect w2-db-net
+"docker network connect" requires exactly 2 arguments.
+See 'docker network connect --help'.
+
+Usage:  docker network connect [OPTIONS] NETWORK CONTAINER
+
+Connect a container to a network
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network create w2-db-net
+260295ebb38bf9597bc0cd9d8fc7ea866368a3a9a878aa731348f97fad35c7f8
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+88236f4e0388        bridge              bridge              local
+62e0554f0114        host                host                local
+d1ed7d99f26f        none                null                local
+5ea1523edb52        w1-db-net           bridge              local
+260295ebb38b        w2-db-net           bridge              local
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network disconnect bridge w2
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network connect w2-db-net w2
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container inspect w2 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.19.0.2",
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container inspect db | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.18.0.3",
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network connect w2-db-net db
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container inspect db | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.18.0.3",
+                    "IPAddress": "172.19.0.3",
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container inspect w1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.18.0.2",
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container inspect db | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.18.0.3",
+                    "IPAddress": "172.19.0.3",
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container inspect w2 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.19.0.2",
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container exec w1 ping db
+PING db (172.18.0.3): 56 data bytes
+64 bytes from 172.18.0.3: seq=0 ttl=64 time=0.189 ms
+64 bytes from 172.18.0.3: seq=1 ttl=64 time=0.091 ms
+64 bytes from 172.18.0.3: seq=2 ttl=64 time=0.075 ms
+64 bytes from 172.18.0.3: seq=3 ttl=64 time=0.063 ms
+^C
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container exec w2 ping db
+PING db (172.19.0.3): 56 data bytes
+64 bytes from 172.19.0.3: seq=0 ttl=64 time=0.102 ms
+64 bytes from 172.19.0.3: seq=1 ttl=64 time=0.092 ms
+64 bytes from 172.19.0.3: seq=2 ttl=64 time=0.218 ms
+^C
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container exec w2 ping w1
+ping: bad address 'w1'
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d --name w3 --network w1-db-net  app
+7421dd566f836d9dde87c28dbd0d04b61d3f2387367a833a7dc4511873a37ce2
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container inspect w3 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.18.0.4",
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d --name w4 --network w1-db-net --ip 172.18.0.6  app
+38862c8787c6f8544a44c85ab35f9f08ada29cabab748c91fa9c3be22091c492
+docker: Error response from daemon: user specified IP address is supported only when connecting to networks with user configured subnets.
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network inspect w1-db-net
+[
+    {
+        "Name": "w1-db-net",
+        "Id": "5ea1523edb52a3d094f05e3d6e479a472a039960d0c58cfdbeeca1ac126c8ec3",
+        "Created": "2019-09-17T10:38:32.507725633Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.18.0.0/16",
+                    "Gateway": "172.18.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "5f9ad10c9920892dfb3950226c823082ef9f890512ffbf67b4c1aebe892b0992": {
+                "Name": "db",
+                "EndpointID": "14ded7cfc0b5bb5d2e01b28bcf3368108f1d3aac77ae20d5a486165b100a6b30",
+                "MacAddress": "02:42:ac:12:00:03",
+                "IPv4Address": "172.18.0.3/16",
+                "IPv6Address": ""
+            },
+            "7421dd566f836d9dde87c28dbd0d04b61d3f2387367a833a7dc4511873a37ce2": {
+                "Name": "w3",
+                "EndpointID": "6a1ab382c6575a932566b492328536b24be339dcbf0485117d4ae7114e9e20c0",
+                "MacAddress": "02:42:ac:12:00:04",
+                "IPv4Address": "172.18.0.4/16",
+                "IPv6Address": ""
+            },
+            "eb51ecfc138aea836348efcf272e2b96962bfb06842accbdee1a30c336a89787": {
+                "Name": "w1",
+                "EndpointID": "0e59a7a124a88f035dc95450dea5875010f5640cf7c188db45af29fb430589a3",
+                "MacAddress": "02:42:ac:12:00:02",
+                "IPv4Address": "172.18.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network create mynet --subnet 172.20.0.0/16 --gateway 172.20.0.1
+23f238f54dc9e1ccf9556528c6b77e58ff0b4d7f919bf51ffc45fbe06f15e5ff
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d --name w5 --network mynet --ip 172.20.50.50  app
+b9a5aba28687669bb907266844568cbf4240c5f2ac6722f8312dda8cacb9f315
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container inspect w5 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.20.50.50",
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
