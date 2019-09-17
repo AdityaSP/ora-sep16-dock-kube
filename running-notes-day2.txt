@@ -455,3 +455,137 @@ RUN apk add apache2
 
 ------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
 $
+
+
+------------------------------------------------------------------------------------------------------------
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image ls app
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+app                 1                   2b5627a92f3f        30 seconds ago      10.6MB
+app                 latest              2b5627a92f3f        30 seconds ago      10.6MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image ls alpine
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+alpine              latest              961769676411        3 weeks ago         5.58MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ cat Dockerfile
+FROM alpine
+RUN apk update
+RUN apk add apache2
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ ls
+Dockerfile
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ cat > mypage.html
+<h1> My Code </h1>
+^C
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ vi Dockerfile
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image ls app
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+app                 1                   2b5627a92f3f        About an hour ago   10.6MB
+app                 latest              2b5627a92f3f        About an hour ago   10.6MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image build -f Dockerfile -t app:2 -t app:latest .
+Sending build context to Docker daemon  3.072kB
+Step 1/4 : FROM alpine
+ ---> 961769676411
+Step 2/4 : RUN apk update
+ ---> Using cache
+ ---> 73e6fa59f8ec
+Step 3/4 : RUN apk add apache2
+ ---> Using cache
+ ---> 2b5627a92f3f
+Step 4/4 : COPY mypage.html /var/www/localhost/htdocs
+ ---> d816d744292c
+Successfully built d816d744292c
+Successfully tagged app:2
+Successfully tagged app:latest
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image ls app
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+app                 2                   d816d744292c        43 seconds ago      10.6MB
+app                 latest              d816d744292c        43 seconds ago      10.6MB
+app                 1                   2b5627a92f3f        About an hour ago   10.6MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ vi Dockerfile
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image build -f Dockerfile -t app:2 -t app:latest .
+Sending build context to Docker daemon  3.072kB
+Step 1/4 : FROM alpine
+ ---> 961769676411
+Step 2/4 : RUN apk update
+ ---> Using cache
+ ---> 73e6fa59f8ec
+Step 3/4 : RUN apk add apache2
+ ---> Using cache
+ ---> 2b5627a92f3f
+Step 4/4 : COPY mypage1.html /var/www/localhost/htdocs
+COPY failed: stat /var/lib/docker/tmp/docker-builder724365632/mypage1.html: no such file or directory
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ ls
+Dockerfile  mypage.html
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ cd ../..
+
+------------/c/Users/Aditya/docker-workshop/sept16
+$ ls
+ora-sep16-dock-kube
+
+------------/c/Users/Aditya/docker-workshop/sept16
+$ cd ora-sep16-dock-kube/
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube
+$ ls
+ README.md   docker-command-list.docx   k8s               running-notes-day1.txt  '~$rough-diag.pptx'
+ app         dockers-slightedge.pdf     rough-diag.pptx   setup.md
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube
+$ cd app
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ vi Dockerfile
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ cat Dockerfile
+FROM alpine
+RUN apk update
+RUN apk add apache2
+COPY mypage.html /var/www/localhost/htdocs
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image build -f Dockerfile -t app:2 -t app:latest .
+Sending build context to Docker daemon  3.072kB
+Step 1/4 : FROM alpine
+ ---> 961769676411
+Step 2/4 : RUN apk update
+ ---> Using cache
+ ---> 73e6fa59f8ec
+Step 3/4 : RUN apk add apache2
+ ---> Using cache
+ ---> 2b5627a92f3f
+Step 4/4 : COPY mypage.html /var/www/localhost/htdocs
+ ---> Using cache
+ ---> d816d744292c
+Successfully built d816d744292c
+Successfully tagged app:2
+Successfully tagged app:latest
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
