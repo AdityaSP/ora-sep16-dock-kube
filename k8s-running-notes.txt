@@ -260,3 +260,444 @@ helloworld-controller-tkcpt   1/1     Running   0          6m49s   172.17.0.4   
 
 Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
 λ
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl apply -f pod/pod-helloworld.yml
+pod/my-nginx created
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods
+NAME       READY   STATUS    RESTARTS   AGE
+my-nginx   1/1     Running   0          6s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods --show-lables
+Error: unknown flag: --show-lables
+
+
+Examples:
+  # List all pods in ps output format.
+  kubectl get pods
+
+  # List all pods in ps output format with more information (such as node name).
+  kubectl get pods -o wide
+
+  # List a single replication controller with specified NAME in ps output format.
+  kubectl get replicationcontroller web
+
+  # List deployments in JSON output format, in the "v1" version of the "apps" API group:
+  kubectl get deployments.v1.apps -o json
+
+  # List a single pod in JSON output format.
+  kubectl get -o json pod web-pod-13je7
+
+  # List a pod identified by type and name specified in "pod.yaml" in JSON output format.
+  kubectl get -f pod.yaml -o json
+
+  # List resources from a directory with kustomization.yaml - e.g. dir/kustomization.yaml.
+  kubectl get -k dir/
+
+  # Return only the phase value of the specified pod.
+  kubectl get -o template pod/web-pod-13je7 --template={{.status.phase}}
+
+  # List resource information in custom columns.
+  kubectl get pod test-pod -o custom-columns=CONTAINER:.spec.containers[0].name,IMAGE:.spec.containers[0].image
+
+  # List all replication controllers and services together in ps output format.
+  kubectl get rc,services
+
+  # List one or more resources by their type and names.
+  kubectl get rc/web service/frontend pods/web-pod-13je7
+
+Options:
+  -A, --all-namespaces=false: If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.
+      --allow-missing-template-keys=true: If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+      --chunk-size=500: Return large lists in chunks rather than all at once. Pass 0 to disable. This flag is beta and may change in the future.
+      --field-selector='': Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.
+  -f, --filename=[]: Filename, directory, or URL to files identifying the resource to get from a server.
+      --ignore-not-found=false: If the requested object does not exist the command will return exit code 0.
+  -k, --kustomize='': Process the kustomization directory. This flag can't be used together with -f or -R.
+  -L, --label-columns=[]: Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2...
+      --no-headers=false: When using the default or custom-column output format, don't print headers (default print headers).
+  -o, --output='': Output format. One of: json|yaml|wide|name|custom-columns=...|custom-columns-file=...|go-template=...|go-template-file=...|jsonpath=...|jsonpath-file=... See custom columns [http://kubernetes.io/docs/user-guide/kubectl-overview/#custom-columns], golang template [http://golang.org/pkg/text/template/#pkg-overview] and jsonpath template [http://kubernetes.io/docs/user-guide/jsonpath].
+      --raw='': Raw URI to request from the server.  Uses the transport specified by the kubeconfig file.
+  -R, --recursive=false: Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
+  -l, --selector='': Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+      --server-print=true: If true, have the server return the appropriate table output. Supports extension APIs and CRDs.
+      --show-kind=false: If present, list the resource type for the requested object(s).
+      --show-labels=false: When printing, show all labels as the last column (default hide labels column)
+      --sort-by='': If non-empty, sort list types using this field specification.  The field specification is expressed as a JSONPath expression (e.g. '{.metadata.name}'). The field in the API resource specified by this JSONPath expression must be an integer or a string.
+      --template='': Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+  -w, --watch=false: After listing/getting the requested object, watch for changes. Uninitialized objects are excluded if no object name is provided.
+      --watch-only=false: Watch for changes to the requested object(s), without listing/getting first.
+
+Usage:
+  kubectl get [(-o|--output=)json|yaml|wide|custom-columns=...|custom-columns-file=...|go-template=...|go-template-file=...|jsonpath=...|jsonpath-file=...] (TYPE[.VERSION][.GROUP] [NAME | -l label] | TYPE[.VERSION][.GROUP]/NAME ...) [flags] [options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+
+unknown flag: --show-lables
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods --show-labels
+NAME       READY   STATUS    RESTARTS   AGE   LABELS
+my-nginx   1/1     Running   0          29s   app=helloworld
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl apply -f rc/rc-helloworld.yml
+replicationcontroller/helloworld-controller created
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get rc
+NAME                    DESIRED   CURRENT   READY   AGE
+helloworld-controller   2         2         2       5s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods --show-labels
+NAME                          READY   STATUS    RESTARTS   AGE   LABELS
+helloworld-controller-v6t6s   1/1     Running   0          10s   app=helloworld
+my-nginx                      1/1     Running   0          82s   app=helloworld
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl delete pod my-nginx
+pod "my-nginx" deleted
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods --show-labels
+NAME                          READY   STATUS    RESTARTS   AGE    LABELS
+helloworld-controller-bnpl5   1/1     Running   0          16s    app=helloworld
+helloworld-controller-v6t6s   1/1     Running   0          105s   app=helloworld
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get rc
+NAME                    DESIRED   CURRENT   READY   AGE
+helloworld-controller   2         2         2       2m15s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pod
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-bnpl5   1/1     Running   0          50s
+helloworld-controller-v6t6s   1/1     Running   0          2m19s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pod --show-labels
+NAME                          READY   STATUS    RESTARTS   AGE     LABELS
+helloworld-controller-bnpl5   1/1     Running   0          55s     app=helloworld
+helloworld-controller-v6t6s   1/1     Running   0          2m24s   app=helloworld
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl apply -f pod/pod-helloworld.yml
+pod/my-nginx created
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pod --show-labels
+NAME                          READY   STATUS        RESTARTS   AGE     LABELS
+helloworld-controller-bnpl5   1/1     Running       0          73s     app=helloworld
+helloworld-controller-v6t6s   1/1     Running       0          2m42s   app=helloworld
+my-nginx                      0/1     Terminating   0          1s      app=helloworld
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pod --show-labels
+NAME                          READY   STATUS    RESTARTS   AGE     LABELS
+helloworld-controller-bnpl5   1/1     Running   0          102s    app=helloworld
+helloworld-controller-v6t6s   1/1     Running   0          3m11s   app=helloworld
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl apply -f pod/pod-helloworld.yml
+pod/my-nginx created
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pod --show-labels
+NAME                          READY   STATUS              RESTARTS   AGE     LABELS
+helloworld-controller-bnpl5   1/1     Running             0          2m36s   app=helloworld
+helloworld-controller-v6t6s   1/1     Running             0          4m5s    app=helloworld
+my-nginx                      0/1     ContainerCreating   0          2s      app=helloworld2
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-bnpl5   1/1     Running   0          3m52s
+helloworld-controller-v6t6s   1/1     Running   0          5m21s
+my-nginx                      1/1     Running   0          78s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl delete -f rc/rc-helloworld.yml
+replicationcontroller "helloworld-controller" deleted
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl delete -f pod/pod-helloworld.yml
+pod "my-nginx" deleted
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods
+No resources found.
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl apply -f dep/dep-helloworld.yml
+deployment.extensions/helloworld-dep created
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                              READY   STATUS              RESTARTS   AGE
+helloworld-dep-549b6cfcc4-qrn6n   0/1     ContainerCreating   0          7s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get deploy
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+helloworld-dep   1/1     1            1           22s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get rs
+NAME                        DESIRED   CURRENT   READY   AGE
+helloworld-dep-549b6cfcc4   1         1         1       35s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+helloworld-dep-549b6cfcc4-qrn6n   1/1     Running   0          39s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl scale deploy helloworld-dep --replicas 10
+deployment.extensions/helloworld-dep scaled
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+helloworld-dep-549b6cfcc4-9hqtf   1/1     Running   0          12s
+helloworld-dep-549b6cfcc4-9p5fr   1/1     Running   0          12s
+helloworld-dep-549b6cfcc4-9p8kl   1/1     Running   0          12s
+helloworld-dep-549b6cfcc4-jcmqv   1/1     Running   0          13s
+helloworld-dep-549b6cfcc4-jjz2d   1/1     Running   0          12s
+helloworld-dep-549b6cfcc4-nwpv5   1/1     Running   0          12s
+helloworld-dep-549b6cfcc4-q6w9h   1/1     Running   0          12s
+helloworld-dep-549b6cfcc4-qrn6n   1/1     Running   0          113s
+helloworld-dep-549b6cfcc4-sxsdl   1/1     Running   0          12s
+helloworld-dep-549b6cfcc4-w68k8   1/1     Running   0          12s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout history deploy helloworld-dep
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+1         <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout history deploy helloworld-dep --revision 1
+deployment.extensions/helloworld-dep with revision #1
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=549b6cfcc4
+  Containers:
+   web:
+    Image:      nginx:mainline
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout status deploy helloworld-dep
+deployment "helloworld-dep" successfully rolled out
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl apply -f dep/dep-helloworld.yml
+deployment.extensions/helloworld-dep configured
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout status deploy helloworld-dep
+Waiting for deployment "helloworld-dep" rollout to finish: 2 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 2 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 2 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 2 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 3 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 3 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 3 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 4 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 4 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 4 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 4 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 5 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 5 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 5 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 5 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 5 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 6 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 6 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 6 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 6 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 6 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 7 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 7 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 7 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 8 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 8 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 8 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 8 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 9 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 9 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 9 out of 10 new replicas have been updated...
+Waiting for deployment "helloworld-dep" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "helloworld-dep" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "helloworld-dep" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "helloworld-dep" rollout to finish: 9 of 10 updated replicas are available...
+deployment "helloworld-dep" successfully rolled out
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout history deploy helloworld-dep --revision 1
+deployment.extensions/helloworld-dep with revision #1
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=549b6cfcc4
+  Containers:
+   web:
+    Image:      nginx:mainline
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout history deploy helloworld-dep
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout history deploy helloworld-dep --revision 1
+deployment.extensions/helloworld-dep with revision #1
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=549b6cfcc4
+  Containers:
+   web:
+    Image:      nginx:mainline
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout history deploy helloworld-dep --revision 2
+deployment.extensions/helloworld-dep with revision #2
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=85d7854f8b
+  Containers:
+   web:
+    Image:      nginx:alpine
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+helloworld-dep-85d7854f8b-8dmb9   1/1     Running   0          64s
+helloworld-dep-85d7854f8b-964q9   1/1     Running   0          61s
+helloworld-dep-85d7854f8b-bqq29   1/1     Running   0          56s
+helloworld-dep-85d7854f8b-bww6f   1/1     Running   0          51s
+helloworld-dep-85d7854f8b-cbqgz   1/1     Running   0          66s
+helloworld-dep-85d7854f8b-d6c42   1/1     Running   0          56s
+helloworld-dep-85d7854f8b-mjtm9   1/1     Running   0          66s
+helloworld-dep-85d7854f8b-p7272   1/1     Running   0          64s
+helloworld-dep-85d7854f8b-sp5lk   1/1     Running   0          60s
+helloworld-dep-85d7854f8b-vvfbq   1/1     Running   0          51s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout history deploy helloworld-dep
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout undo deploy helloworld-dep --to-revision 1
+deployment.extensions/helloworld-dep rolled back
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout history deploy helloworld-dep
+deployment.extensions/helloworld-dep
+REVISION  CHANGE-CAUSE
+2         <none>
+3         <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout history deploy helloworld-dep --revision 2
+deployment.extensions/helloworld-dep with revision #2
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=85d7854f8b
+  Containers:
+   web:
+    Image:      nginx:alpine
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout history deploy helloworld-dep --revision 1
+error: unable to find the specified revision
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl rollout history deploy helloworld-dep --revision 3
+deployment.extensions/helloworld-dep with revision #3
+Pod Template:
+  Labels:       app=helloworld
+        pod-template-hash=549b6cfcc4
+  Containers:
+   web:
+    Image:      nginx:mainline
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
