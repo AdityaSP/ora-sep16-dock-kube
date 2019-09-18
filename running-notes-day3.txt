@@ -1,0 +1,271 @@
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image ls ghost
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ghost               1-alpine            0a776b9b8e0c        2 months ago        213MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image history ghost:1-alpine
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+0a776b9b8e0c        2 months ago        /bin/sh -c #(nop)  CMD ["node" "current/inde…   0B
+<missing>           2 months ago        /bin/sh -c #(nop)  EXPOSE 2368                  0B
+<missing>           2 months ago        /bin/sh -c #(nop)  ENTRYPOINT ["docker-entry…   0B
+<missing>           2 months ago        /bin/sh -c #(nop) COPY file:f1f79dab1b0ea936…   678B
+<missing>           2 months ago        /bin/sh -c #(nop)  VOLUME [/var/lib/ghost/co…   0B
+<missing>           2 months ago        /bin/sh -c #(nop) WORKDIR /var/lib/ghost        0B
+<missing>           2 months ago        /bin/sh -c #(nop)  ENV PATH=/usr/local/sbin:…   0B
+<missing>           2 months ago        /bin/sh -c set -eux;  mkdir -p "$GHOST_INSTA…   118MB
+<missing>           2 months ago        /bin/sh -c #(nop)  ENV GHOST_VERSION=1.26.0     0B
+<missing>           3 months ago        /bin/sh -c #(nop)  ENV GHOST_CONTENT=/var/li…   0B
+<missing>           3 months ago        /bin/sh -c #(nop)  ENV GHOST_INSTALL=/var/li…   0B
+<missing>           3 months ago        /bin/sh -c set -eux;  npm install -g "ghost-…   24.4MB
+<missing>           3 months ago        /bin/sh -c #(nop)  ENV GHOST_CLI_VERSION=1.1…   0B
+<missing>           3 months ago        /bin/sh -c #(nop)  ENV NODE_ENV=production      0B
+<missing>           3 months ago        /bin/sh -c apk add --no-cache   bash            4.03MB
+<missing>           3 months ago        /bin/sh -c apk add --no-cache 'su-exec>=0.2'    36.4kB
+<missing>           3 months ago        /bin/sh -c #(nop)  CMD ["node"]                 0B
+<missing>           3 months ago        /bin/sh -c #(nop)  ENTRYPOINT ["docker-entry…   0B
+<missing>           3 months ago        /bin/sh -c #(nop) COPY file:238737301d473041…   116B
+<missing>           4 months ago        /bin/sh -c apk add --no-cache --virtual .bui…   5.1MB
+<missing>           4 months ago        /bin/sh -c #(nop)  ENV YARN_VERSION=1.15.2      0B
+<missing>           4 months ago        /bin/sh -c addgroup -g 1000 node     && addu…   56MB
+<missing>           4 months ago        /bin/sh -c #(nop)  ENV NODE_VERSION=8.16.0      0B
+<missing>           4 months ago        /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>           4 months ago        /bin/sh -c #(nop) ADD file:a86aea1f3a7d68f6a…   5.53MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image history nginx
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+ab56bba91343        5 days ago          /bin/sh -c #(nop)  CMD ["nginx" "-g" "daemon…   0B
+<missing>           5 days ago          /bin/sh -c #(nop)  STOPSIGNAL SIGTERM           0B
+<missing>           5 days ago          /bin/sh -c #(nop)  EXPOSE 80                    0B
+<missing>           5 days ago          /bin/sh -c ln -sf /dev/stdout /var/log/nginx…   22B
+<missing>           5 days ago          /bin/sh -c set -x     && addgroup --system -…   56.8MB
+<missing>           5 days ago          /bin/sh -c #(nop)  ENV PKG_RELEASE=1~buster     0B
+<missing>           5 days ago          /bin/sh -c #(nop)  ENV NJS_VERSION=0.3.5        0B
+<missing>           5 days ago          /bin/sh -c #(nop)  ENV NGINX_VERSION=1.17.3     0B
+<missing>           5 days ago          /bin/sh -c #(nop)  LABEL maintainer=NGINX Do…   0B
+<missing>           6 days ago          /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>           6 days ago          /bin/sh -c #(nop) ADD file:1901172d265456090…   69.2MB
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image history mysql:5.7 | grep EXPOSE
+<missing>           8 weeks ago         /bin/sh -c #(nop)  EXPOSE 3306 33060            0B
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker image history ghost:1-alpine | grep EXPOSE
+<missing>           2 months ago        /bin/sh -c #(nop)  EXPOSE 2368                  0B
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run --rm -e VAR1=hello app env
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=430297161a4e
+VAR1=hello
+HOME=/root
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ cat > envfile
+VAR1=hello
+VAR2=hello2
+^C
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run --help | grep env
+  -e, --env list                       Set environment variables
+      --env-file list                  Read in a file of environment variables
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run --rm --env-file ./envfile  app env
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=9dde197c156f
+VAR1=hello
+VAR2=hello2
+HOME=/root
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls | grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+b9a5aba28687        app                    "httpd -D FOREGROUND"    18 hours ago        Up 18 hours                             w5
+7421dd566f83        app                    "httpd -D FOREGROUND"    18 hours ago        Up 18 hours                             w3
+5f9ad10c9920        app                    "httpd -D FOREGROUND"    18 hours ago        Up 18 hours                             db
+2b54552a21ca        app                    "httpd -D FOREGROUND"    18 hours ago        Up 18 hours                             w2
+eb51ecfc138a        app                    "httpd -D FOREGROUND"    18 hours ago        Up 18 hours                             w1
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a| grep -v k8s
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
+b9a5aba28687        app                    "httpd -D FOREGROUND"    18 hours ago        Up 18 hours                             w5
+38862c8787c6        app                    "httpd -D FOREGROUND"    18 hours ago        Created                                 w4
+7421dd566f83        app                    "httpd -D FOREGROUND"    18 hours ago        Up 18 hours                             w3
+5f9ad10c9920        app                    "httpd -D FOREGROUND"    18 hours ago        Up 18 hours                             db
+2b54552a21ca        app                    "httpd -D FOREGROUND"    18 hours ago        Up 18 hours                             w2
+eb51ecfc138a        app                    "httpd -D FOREGROUND"    18 hours ago        Up 18 hours                             w1
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a | grep -v k8s | cut -f 1 -d ' '
+CONTAINER
+b9a5aba28687
+38862c8787c6
+7421dd566f83
+5f9ad10c9920
+2b54552a21ca
+eb51ecfc138a
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container rm -f `docker container ls -a | grep -v k8s | cut -f 1 -d ' '`
+b9a5aba28687
+38862c8787c6
+7421dd566f83
+5f9ad10c9920
+2b54552a21ca
+eb51ecfc138a
+Error: No such container: CONTAINER
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network prune
+WARNING! This will remove all networks not used by at least one container.
+Are you sure you want to continue? [y/N] y
+Deleted Networks:
+w2-db-net
+mynet
+w1-db-net
+
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network create blog-nw
+b7edefe29b75700548451e5cce55c7491287e6507c509939f9c1365ac2839f4c
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker network inspect blog-nw
+[
+    {
+        "Name": "blog-nw",
+        "Id": "b7edefe29b75700548451e5cce55c7491287e6507c509939f9c1365ac2839f4c",
+        "Created": "2019-09-18T04:43:53.494686115Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.20.0.0/16",
+                    "Gateway": "172.20.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d --name blog-db --network blog-nw -e MYSQL_ROOT_PASSWORD=welcome -v /tmp/blog-data:/var/lib/mysql mysql:5.7
+3d246289d42e13938b2b94d13e85fdc0a2f2d7b15bfebc2165dacaea6df2d89b
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container ls -a| grep -v k8s                                                                          CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                 NAMES
+3d246289d42e        mysql:5.7              "docker-entrypoint.s…"   8 seconds ago       Up 6 seconds        3306/tcp, 33060/tcp   blog-db
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ ls /tmp/blog-data/
+auto.cnf    client-cert.pem  ib_logfile0  ibtmp1              private_key.pem  server-key.pem
+ca-key.pem  client-key.pem   ib_logfile1  mysql               public_key.pem   sys
+ca.pem      ib_buffer_pool   ibdata1      performance_schema  server-cert.pem
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container run -d --name blog-ghost --network blog-nw -p 9292:2368 -e database__client=mysql -e database__connection__host=blog-db -e database__connection__port=3306 -e database__connection__user=root -e database__connection__password=welcome -e database__connection__database=ghost ghost:1-alpine
+c96b4acd6d6f16af07fcbdc9049472cf340d06b9322459717fb682bd9ab05e7f
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$ docker container exec -it blog-db mysql -uroot -pwelcome
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 34
+Server version: 5.7.27 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ghost              |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use ghost;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++------------------------+
+| Tables_in_ghost        |
++------------------------+
+| accesstokens           |
+| app_fields             |
+| app_settings           |
+| apps                   |
+| brute                  |
+| client_trusted_domains |
+| clients                |
+| invites                |
+| migrations             |
+| migrations_lock        |
+| permissions            |
+| permissions_apps       |
+| permissions_roles      |
+| permissions_users      |
+| posts                  |
+| posts_authors          |
+| posts_tags             |
+| refreshtokens          |
+| roles                  |
+| roles_users            |
+| settings               |
+| subscribers            |
+| tags                   |
+| users                  |
+| webhooks               |
++------------------------+
+25 rows in set (0.00 sec)
+
+mysql> exit
+Bye
+
+------------/c/Users/Aditya/docker-workshop/sept16/ora-sep16-dock-kube/app
+$
