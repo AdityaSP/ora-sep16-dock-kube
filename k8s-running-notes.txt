@@ -130,3 +130,133 @@ my-nginx   1/1     Running   0          42m
 
 Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
 λ
+
+
+--------------------------------------------------------------------------------------------
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl apply -f rc/rc-helloworld.yml
+replicationcontroller/helloworld-controller created
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get replicationcontroller
+NAME                    DESIRED   CURRENT   READY   AGE
+helloworld-controller   2         2         2       22s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get rc
+NAME                    DESIRED   CURRENT   READY   AGE
+helloworld-controller   2         2         2       30s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl describe rc helloworld-controller
+Name:         helloworld-controller
+Namespace:    default
+Selector:     app=helloworld
+Labels:       app=helloworld
+Annotations:  kubectl.kubernetes.io/last-applied-configuration:
+                {"apiVersion":"v1","kind":"ReplicationController","metadata":{"annotations":{},"name":"helloworld-controller","namespace":"default"},"spec...
+Replicas:     2 current / 2 desired
+Pods Status:  2 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:  app=helloworld
+  Containers:
+   nginx:
+    Image:        nginx:alpine
+    Port:         80/TCP
+    Host Port:    0/TCP
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Events:
+  Type    Reason            Age    From                    Message
+  ----    ------            ----   ----                    -------
+  Normal  SuccessfulCreate  2m28s  replication-controller  Created pod: helloworld-controller-tkcpt
+  Normal  SuccessfulCreate  2m28s  replication-controller  Created pod: helloworld-controller-k8q6h
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-k8q6h   1/1     Running   0          2m2s
+helloworld-controller-tkcpt   1/1     Running   0          2m2s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl delete pod helloworld-controller-k8q6h
+pod "helloworld-controller-k8q6h" deleted
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-nnbpn   1/1     Running   0          4s
+helloworld-controller-tkcpt   1/1     Running   0          2m57s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl scale rc helloworld-controller --replicas 10
+replicationcontroller/helloworld-controller scaled
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                          READY   STATUS              RESTARTS   AGE
+helloworld-controller-4hdpr   0/1     ContainerCreating   0          2s
+helloworld-controller-6npjk   0/1     ContainerCreating   0          2s
+helloworld-controller-97272   0/1     ContainerCreating   0          2s
+helloworld-controller-9gr8g   0/1     ContainerCreating   0          2s
+helloworld-controller-fh9w6   0/1     ContainerCreating   0          2s
+helloworld-controller-ljsld   0/1     ContainerCreating   0          2s
+helloworld-controller-nnbpn   1/1     Running             0          100s
+helloworld-controller-tkcpt   1/1     Running             0          4m33s
+helloworld-controller-wgc97   0/1     ContainerCreating   0          2s
+helloworld-controller-whprg   0/1     ContainerCreating   0          2s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+helloworld-controller-4hdpr   1/1     Running   0          98s
+helloworld-controller-6npjk   1/1     Running   0          98s
+helloworld-controller-97272   1/1     Running   0          98s
+helloworld-controller-9gr8g   1/1     Running   0          98s
+helloworld-controller-fh9w6   1/1     Running   0          98s
+helloworld-controller-ljsld   1/1     Running   0          98s
+helloworld-controller-nnbpn   1/1     Running   0          3m16s
+helloworld-controller-tkcpt   1/1     Running   0          6m9s
+helloworld-controller-wgc97   1/1     Running   0          98s
+helloworld-controller-whprg   1/1     Running   0          98s
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods -o wide
+NAME                          READY   STATUS    RESTARTS   AGE     IP            NODE       NOMINATED NODE   READINESS GATES
+helloworld-controller-4hdpr   1/1     Running   0          103s    172.17.0.9    minikube   <none>           <none>
+helloworld-controller-6npjk   1/1     Running   0          103s    172.17.0.10   minikube   <none>           <none>
+helloworld-controller-97272   1/1     Running   0          103s    172.17.0.7    minikube   <none>           <none>
+helloworld-controller-9gr8g   1/1     Running   0          103s    172.17.0.13   minikube   <none>           <none>
+helloworld-controller-fh9w6   1/1     Running   0          103s    172.17.0.12   minikube   <none>           <none>
+helloworld-controller-ljsld   1/1     Running   0          103s    172.17.0.8    minikube   <none>           <none>
+helloworld-controller-nnbpn   1/1     Running   0          3m21s   172.17.0.5    minikube   <none>           <none>
+helloworld-controller-tkcpt   1/1     Running   0          6m14s   172.17.0.4    minikube   <none>           <none>
+helloworld-controller-wgc97   1/1     Running   0          103s    172.17.0.11   minikube   <none>           <none>
+helloworld-controller-whprg   1/1     Running   0          103s    172.17.0.6    minikube   <none>           <none>
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl scale rc helloworld-controller --replicas 2
+replicationcontroller/helloworld-controller scaled
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods -o wide
+NAME                          READY   STATUS        RESTARTS   AGE     IP            NODE       NOMINATED NODE   READINESS GATES
+helloworld-controller-4hdpr   0/1     Terminating   0          2m9s    172.17.0.9    minikube   <none>           <none>
+helloworld-controller-6npjk   1/1     Terminating   0          2m9s    172.17.0.10   minikube   <none>           <none>
+helloworld-controller-97272   0/1     Terminating   0          2m9s    172.17.0.7    minikube   <none>           <none>
+helloworld-controller-9gr8g   0/1     Terminating   0          2m9s    172.17.0.13   minikube   <none>           <none>
+helloworld-controller-fh9w6   0/1     Terminating   0          2m9s    172.17.0.12   minikube   <none>           <none>
+helloworld-controller-ljsld   0/1     Terminating   0          2m9s    172.17.0.8    minikube   <none>           <none>
+helloworld-controller-nnbpn   1/1     Running       0          3m47s   172.17.0.5    minikube   <none>           <none>
+helloworld-controller-tkcpt   1/1     Running       0          6m40s   172.17.0.4    minikube   <none>           <none>
+helloworld-controller-wgc97   0/1     Terminating   0          2m9s    172.17.0.11   minikube   <none>           <none>
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods -o wide
+NAME                          READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES
+helloworld-controller-nnbpn   1/1     Running   0          3m56s   172.17.0.5   minikube   <none>           <none>
+helloworld-controller-tkcpt   1/1     Running   0          6m49s   172.17.0.4   minikube   <none>           <none>
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
