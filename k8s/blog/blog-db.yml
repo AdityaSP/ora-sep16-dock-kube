@@ -7,7 +7,7 @@ spec:
   template:
     metadata:
       labels:
-        blog: db
+        app: blog-db
     spec:
       containers:
       - name: db
@@ -19,6 +19,7 @@ spec:
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: welcome
+          
 ---
 apiVersion: v1
 kind: Service
@@ -30,5 +31,6 @@ spec:
     targetPort: dbport
     protocol: TCP
   selector:
-    blog: db
+    app: blog-db
   type: ClusterIP
+
