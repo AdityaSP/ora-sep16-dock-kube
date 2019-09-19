@@ -701,3 +701,67 @@ Pod Template:
 
 Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
 λ
+
+
+
+--------------------------------------------------------------------------------------------------------
+λ kubectl get pods
+NAME                             READY   STATUS    RESTARTS   AGE
+helloworld-dep-579758d98-c9zcz   1/1     Running   0          122m
+helloworld-dep-579758d98-dtr5l   1/1     Running   0          122m
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl delete deploy helloworld-dep
+deployment.extensions "helloworld-dep" deleted
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl apply -f blog/blog-db.yml
+deployment.extensions/blog-db-dep created
+service/blog-db-svc configured
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods -o wide
+NAME                          READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+blog-db-dep-fb84f9b49-grfbd   1/1     Running   0          15s   172.17.0.4   minikube   <none>           <none>
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl describe svc blog-db-svc
+Name:              blog-db-svc
+Namespace:         default
+Labels:            <none>
+Annotations:       kubectl.kubernetes.io/last-applied-configuration:
+                     {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"blog-db-svc","namespace":"default"},"spec":{"ports":[{"port":8888...
+Selector:          app=blog-db
+Type:              ClusterIP
+IP:                10.101.225.160
+Port:              <unset>  8888/TCP
+TargetPort:        dbport/TCP
+Endpoints:         172.17.0.4:3306
+Session Affinity:  None
+Events:            <none>
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl apply -f blog/blog-ghost.yml
+deployment.extensions/blog-ghost-dep created
+service/blog-ghost-svc configured
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods -o wide
+NAME                              READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+blog-db-dep-fb84f9b49-grfbd       1/1     Running   0          89s   172.17.0.4   minikube   <none>           <none>
+blog-ghost-dep-556b8fcdb5-9bb28   1/1     Running   0          12s   172.17.0.5   minikube   <none>           <none>
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl describe service/blog-ghost-svc
+Name:                     blog-ghost-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.io/last-applied-configuration:
+                            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"blog-ghost-svc","namespace":"default"},"spec":{"ports":[{"nodePor...
+Selector:                 app=blog-ghost
+Type:                     NodePort
+IP:                       10.109.0.131
+Port:                     <unset>  8888/TCP
+TargetPort:               ghostport/TCP
+NodePort:                 <unset>  32005/TCP
+Endpoints:                172.17.0.5:2368
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
