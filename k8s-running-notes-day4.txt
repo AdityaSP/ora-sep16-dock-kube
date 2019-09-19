@@ -101,3 +101,107 @@ External Traffic Policy:  Cluster
 Events:                   <none>
 Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
 λ
+-----------------------------------------------------------------------------------------------------------
+
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl apply -f dep/dep-helloworld.yml
+deployment.extensions/helloworld-dep configured
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods --show-labels -o wide
+NAME                             READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES   LABELS
+helloworld-dep-579758d98-c9zcz   1/1     Running   0          6s    172.17.0.4   minikube   <none>           <none>            app=helloworld,pod-template-hash=579758d98
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl scale deploy helloworld-dep --replicas  2
+deployment.extensions/helloworld-dep scaled
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods --show-labels -o wide
+NAME                             READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES   LABELS
+helloworld-dep-579758d98-c9zcz   1/1     Running   0          16s   172.17.0.4   minikube   <none>           <none>            app=helloworld,pod-template-hash=579758d98
+helloworld-dep-579758d98-dtr5l   1/1     Running   0          2s    172.17.0.5   minikube   <none>           <none>            app=helloworld,pod-template-hash=579758d98
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl describe svc hw-svc
+Name:                     hw-svc
+Namespace:                default
+Labels:                   <none>
+Annotations:              kubectl.kubernetes.io/last-applied-configuration:
+                            {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"hw-svc","namespace":"default"},"spec":{"ports":[{"nodePort":31001...
+Selector:                 app=helloworld
+Type:                     NodePort
+IP:                       10.106.208.225
+Port:                     <unset>  8888/TCP
+TargetPort:               nginxport/TCP
+NodePort:                 <unset>  31001/TCP
+Endpoints:                172.17.0.4:80,172.17.0.5:80
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ curl 192.168.99.100
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ curl 192.168.99.100:31001
+<html><body><h1>It works!</h1></body></html>
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods --show-labels -o wide
+NAME                             READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES   LABELS
+helloworld-dep-579758d98-c9zcz   1/1     Running   0          9m20s   172.17.0.4   minikube   <none>           <none>            app=helloworld,pod-template-hash=579758d98
+helloworld-dep-579758d98-dtr5l   1/1     Running   0          9m6s    172.17.0.5   minikube   <none>           <none>            app=helloworld,pod-template-hash=579758d98
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get pods --show-labels -o wide
+NAME                             READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES   LABELS
+helloworld-dep-579758d98-c9zcz   1/1     Running   0          9m24s   172.17.0.4   minikube   <none>           <none>            app=helloworld,pod-template-hash=579758d98
+helloworld-dep-579758d98-dtr5l   1/1     Running   0          9m10s   172.17.0.5   minikube   <none>           <none>            app=helloworld,pod-template-hash=579758d98
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl exec -it helloworld-dep-579758d98-c9zcz -- sh
+/ # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 httpd -D FOREGROUND
+    6 apache    0:00 httpd -D FOREGROUND
+    7 apache    0:00 httpd -D FOREGROUND
+    8 apache    0:00 httpd -D FOREGROUND
+    9 apache    0:00 httpd -D FOREGROUND
+   10 apache    0:00 httpd -D FOREGROUND
+   11 root      0:00 sh
+   16 root      0:00 ps
+/ # curl
+sh: curl: not found
+/ # cat /etc/os-release
+NAME="Alpine Linux"
+ID=alpine
+VERSION_ID=3.10.2
+PRETTY_NAME="Alpine Linux v3.10"
+HOME_URL="https://alpinelinux.org/"
+BUG_REPORT_URL="https://bugs.alpinelinux.org/"
+/ # apk add curl
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/community/x86_64/APKINDEX.tar.gz
+(1/4) Installing ca-certificates (20190108-r0)
+(2/4) Installing nghttp2-libs (1.39.2-r0)
+(3/4) Installing libcurl (7.66.0-r0)
+(4/4) Installing curl (7.66.0-r0)
+Executing busybox-1.30.1-r2.trigger
+Executing ca-certificates-20190108-r0.trigger
+OK: 11 MiB in 24 packages
+/ # curl localhost:80
+<html><body><h1>It works!</h1></body></html>
+/ # curl 172.17.0.5:80
+<html><body><h1>It works!</h1></body></html>
+/ # curl 192.168.99.100:31001
+<html><body><h1>It works!</h1></body></html>
+/ # curl 10.106.208.225:8888
+<html><body><h1>It works!</h1></body></html>
+/ #
+/ #
+/ # curl hw-svc:8888
+<html><body><h1>It works!</h1></body></html>
+/ # cat /etc/resolv.conf
+nameserver 10.96.0.10
+search default.svc.cluster.local svc.cluster.local cluster.local
+options ndots:5
+/ # nslookup hw-svc
+nslookup: can't resolve '(null)': Name does not resolve
+
+Name:      hw-svc
+Address 1: 10.106.208.225 hw-svc.default.svc.cluster.local
+/ #
