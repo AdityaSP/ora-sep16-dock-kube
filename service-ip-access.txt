@@ -1,0 +1,24 @@
+From windows:
+λ curl 192.168.99.100:31001    --> LB
+
+From Minikube
+$ curl 172.17.0.4:80           --> Not LB
+$ curl localhost:31001         --> LB
+$ curl 10.106.208.225:8888     --> LB
+
+From within the POD
+/ # curl localhost:80
+/ # curl 172.17.0.5:80
+/ # curl 192.168.99.100:31001
+/ # curl 10.106.208.225:8888
+/ # curl hw-svc:8888
+/ # cat /etc/resolv.conf
+nameserver 10.96.0.10
+search default.svc.cluster.local svc.cluster.local cluster.local
+options ndots:5
+/ # nslookup hw-svc
+nslookup: can't resolve '(null)': Name does not resolve
+
+Name:      hw-svc
+Address 1: 10.106.208.225 hw-svc.default.svc.cluster.local
+/ #
