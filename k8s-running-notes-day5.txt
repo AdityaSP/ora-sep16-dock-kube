@@ -1,0 +1,47 @@
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl version
+Client Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.0", GitCommit:"e8462b5b5dc2584fdcd18e6bcfe9f1e4d970a529", GitTreeState:"clean", BuildDate:"2019-06-19T16:40:16Z", GoVersion:"go1.12.5", Compiler:"gc", Platform:"windows/amd64"}
+Server Version: version.Info{Major:"1", Minor:"16", GitVersion:"v1.16.0", GitCommit:"2bd9643cee5b3b3a5ecbd3af49d09018f0773c77", GitTreeState:"clean", BuildDate:"2019-09-18T14:27:17Z", GoVersion:"go1.12.9", Compiler:"gc", Platform:"linux/amd64"}
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get nodes
+NAME        STATUS     ROLES    AGE   VERSION
+k8smaster   NotReady   master   17h   v1.16.0
+k8snode1    NotReady   <none>   17h   v1.16.0
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ minikube start
+* minikube v1.2.0 on windows (amd64)
+* Tip: Use 'minikube start -p <name>' to create a new cluster, or 'minikube delete' to delete this one.
+* Restarting existing virtualbox VM for "minikube" ...
+* Waiting for SSH access ...
+* Configuring environment for Kubernetes v1.15.0 on Docker 18.09.6
+* Relaunching Kubernetes v1.15.0 using kubeadm ...
+* Verifying: apiserver proxy etcd scheduler controller dns
+* Done! kubectl is now configured to use "minikube"
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+          kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+*         minikube                      minikube     minikube
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get nodes
+NAME       STATUS   ROLES    AGE   VERSION
+minikube   Ready    <none>   46d   v1.15.0
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl config use-context kubernetes-admin@kubernetes
+Switched to context "kubernetes-admin@kubernetes".
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+          minikube                      minikube     minikube
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ kubectl get nodes
+NAME        STATUS     ROLES    AGE   VERSION
+k8smaster   NotReady   master   17h   v1.16.0
+k8snode1    NotReady   <none>   17h   v1.16.0
+Aditya@DESKTOP-F88S8GU ~/docker-workshop/sept16/ora-sep16-dock-kube/k8s (master)
+λ
